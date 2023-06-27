@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OCPP.Core.WebApi.Controllers;
 
+[ApiController]
 public class ApiController : ControllerBase
 {
   protected IActionResult Problem(List<Error> errors)

@@ -21,11 +21,11 @@ public class ChargePointsController : ApiController
   }
 
   [HttpPost]
-  public IActionResult CreateChargePoint(CreateChargePointRequest request)
+  public IActionResult CreateChargePoint([FromBody] CreateChargePointRequest request)
   {
     var chargepoint = _mapper.Map<ChargePoint>(request);
-    ErrorOr<ChargePoint> result = _chargePointService.AddChargePoint(chargepoint);
 
+    ErrorOr<ChargePoint> result = _chargePointService.AddChargePoint(chargepoint);
     return result.Match(
       (res) => CreatedAtAction(
         actionName: "CreateChargePoint",
@@ -41,15 +41,22 @@ public class ChargePointsController : ApiController
   }
 
   [HttpGet("{id}")]
-  public IActionResult GetChargePoint(int id)
+  public IActionResult GetChargePoint(string id)
   {
-    return Ok(_chargePointService.GetChargePoint(id));
+    ErrorOr<ChargePoint> result = _chargePointService.GetChargePoint(id);
+
+    return result.Match(
+      (res) => Ok(res),
+      (err) => Problem(err));
   }
 
   [HttpPut("{id}")]
-  public IActionResult UpsertChargePoint(UpsertChargePointRequest request)
+  public IActionResult UpsertChargePoint(string id, [FromBody] UpsertChargePointRequest request)
   {
+    if (id != request.ChargePointId) return BadRequest();
+
     var chargepoint = _mapper.Map<ChargePoint>(request);
+
     ErrorOr<ChargePoint> result = _chargePointService.UpsertChargePoint(chargepoint);
     return result.Match(
       _ => NoContent(),
@@ -57,12 +64,12 @@ public class ChargePointsController : ApiController
   }
 
   [HttpDelete("{id}")]
-  public IActionResult DeleteChargePoint(int id)
+  public IActionResult DeleteChargePoint(string id)
   {
     ErrorOr<Deleted> result = _chargePointService.DeleteChargepoint(id);
 
     return result.Match(
-      (res) => Ok(res),
+      (_) => NoContent(),
       (err) => Problem(err)
     );
   }

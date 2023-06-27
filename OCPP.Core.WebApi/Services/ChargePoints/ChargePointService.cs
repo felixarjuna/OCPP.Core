@@ -1,4 +1,6 @@
 using ErrorOr;
+using Microsoft.EntityFrameworkCore;
+using OCPP.Core.Domain.Common.Errors;
 using OCPP.Core.Domain.Entities;
 using OCPP.Core.WebApi.Persistence;
 
@@ -15,12 +17,19 @@ public class ChargePointService : IChargePointService
 
   public ErrorOr<ChargePoint> AddChargePoint(ChargePoint chargepoint)
   {
-    throw new NotImplementedException();
+    if (_context.ChargePoints.Any(x => x.ChargePointId == chargepoint.ChargePointId))
+      return Errors.ChargePoint.AlreadyExists;
+
+    _context.ChargePoints.Add(chargepoint);
+    _context.SaveChanges();
+    return chargepoint;
   }
 
-  public ErrorOr<ChargePoint> GetChargePoint(int id)
+  public ErrorOr<ChargePoint> GetChargePoint(string id)
   {
-    throw new NotImplementedException();
+    if (_context.ChargePoints.AsNoTracking().FirstOrDefault(x => x.ChargePointId == id) is not ChargePoint chargepoint)
+      return Errors.ChargePoint.NotFound;
+    return chargepoint;
   }
 
   public List<ChargePoint> GetChargePoints()
@@ -30,12 +39,22 @@ public class ChargePointService : IChargePointService
 
   public ErrorOr<ChargePoint> UpsertChargePoint(ChargePoint chargepoint)
   {
-    throw new NotImplementedException();
+    if (!_context.ChargePoints.Any(x => x.ChargePointId == chargepoint.ChargePointId))
+      return Errors.ChargePoint.NotFound;
+
+    _context.ChargePoints.Update(chargepoint);
+    _context.SaveChanges();
+    return chargepoint;
   }
 
-  public ErrorOr<Deleted> DeleteChargepoint(int id)
+  public ErrorOr<Deleted> DeleteChargepoint(string id)
   {
-    throw new NotImplementedException();
+    if (_context.ChargePoints.FirstOrDefault(x => x.ChargePointId == id) is not ChargePoint chargepoint)
+      return Errors.ChargePoint.NotFound;
+
+    _context.ChargePoints.Remove(chargepoint);
+    _context.SaveChanges();
+    return Result.Deleted;
   }
 
 

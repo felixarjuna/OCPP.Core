@@ -1,5 +1,10 @@
 namespace OCPP.Core.Contracts.Chargepoint;
 
 public record UpsertChargePointRequest(
-  string name
+  string ChargePointId,
+  string Name,
+  string Comment,
+  string Username,
+  string Password,
+  string ClientCertThumb
 );

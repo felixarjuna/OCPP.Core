@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Immutable;
+using Microsoft.EntityFrameworkCore;
 using OCPP.Core.Domain.Entities;
 
 #nullable disable
@@ -42,25 +43,7 @@ public partial class OCPPCoreDbContext : DbContext
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
-    modelBuilder.Entity<ChargePoint>(entity =>
-    {
-      entity.ToTable("ChargePoint");
-
-      entity.HasIndex(e => e.ChargePointId, "ChargePoint_Identifier")
-                .IsUnique();
-
-      entity.Property(e => e.ChargePointId).HasMaxLength(100);
-
-      entity.Property(e => e.Comment).HasMaxLength(200);
-
-      entity.Property(e => e.Name).HasMaxLength(100);
-
-      entity.Property(e => e.Username).HasMaxLength(50);
-
-      entity.Property(e => e.Password).HasMaxLength(50);
-
-      entity.Property(e => e.ClientCertThumb).HasMaxLength(100);
-    });
+    modelBuilder.ApplyConfigurationsFromAssembly(typeof(OCPPCoreDbContext).Assembly);
 
     modelBuilder.Entity<ChargeTag>(entity =>
     {

@@ -1,0 +1,13 @@
+@host=http://localhost:5207
+
+POST {{host}}/api/chargepoints/
+Content-Type: application/json
+
+{
+  "ChargePointId": "station42",
+  "Name": "surya",
+  "Comment": "My Charging Station",
+  "Username": "test",
+  "Password": "test",
+  "ClientCertThumb": "test"
+}

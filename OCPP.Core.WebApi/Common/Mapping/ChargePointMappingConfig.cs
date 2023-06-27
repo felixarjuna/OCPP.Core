@@ -8,7 +8,12 @@ public class ChargePointMappingConfig : IRegister
 {
   public void Register(TypeAdapterConfig config)
   {
-    config.NewConfig<CreateChargePointRequest, ChargePoint>();
-    config.NewConfig<UpsertChargePointRequest, ChargePoint>();
+    config
+      .NewConfig<CreateChargePointRequest, ChargePoint>()
+      .MapWith(x => ChargePoint.From(x));
+
+    config
+      .NewConfig<UpsertChargePointRequest, ChargePoint>()
+      .MapWith(x => ChargePoint.From(x));
   }
 }

@@ -1,0 +1,13 @@
+@host=http://localhost:5207
+
+PUT {{host}}/api/chargepoints/station42
+Content-Type: application/json
+
+{
+  "ChargePointId": "station42",
+  "Name": "suryaaaaa",
+  "Comment": "My Charging Station",
+  "Username": "test",
+  "Password": "test",
+  "ClientCertThumb": "test"
+}

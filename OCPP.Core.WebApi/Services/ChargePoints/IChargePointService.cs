@@ -7,7 +7,7 @@ public interface IChargePointService
 {
   public ErrorOr<ChargePoint> AddChargePoint(ChargePoint chargepoint);
   public List<ChargePoint> GetChargePoints();
-  public ErrorOr<ChargePoint> GetChargePoint(int id);
+  public ErrorOr<ChargePoint> GetChargePoint(string id);
   public ErrorOr<ChargePoint> UpsertChargePoint(ChargePoint chargepoint);
-  public ErrorOr<Deleted> DeleteChargepoint(int id);
+  public ErrorOr<Deleted> DeleteChargepoint(string id);
 }

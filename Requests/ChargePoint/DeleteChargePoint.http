@@ -1,0 +1,3 @@
+@host=https://localhost:7211
+
+DELETE {{host}}/api/chargepoints/station42
