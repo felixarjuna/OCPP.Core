@@ -1,4 +1,5 @@
 ﻿#nullable disable
+using System.ComponentModel.DataAnnotations;
 namespace OCPP.Core.Domain.Entities;
 
 public partial class ChargePoint

@@ -4,16 +4,9 @@ using OCPP.Core.Domain.Entities;
 #nullable disable
 namespace OCPP.Core.WebApi.Persistence;
 
-public partial class OCPPCoreContext : DbContext
+public partial class OCPPCoreDbContext : DbContext
 {
-  private IConfiguration _configuration;
-
-  public OCPPCoreContext(IConfiguration config) : base()
-  {
-    _configuration = config;
-  }
-
-  public OCPPCoreContext(DbContextOptions<OCPPCoreContext> options)
+  public OCPPCoreDbContext(DbContextOptions<OCPPCoreDbContext> options)
       : base(options)
   {
   }
@@ -27,6 +20,11 @@ public partial class OCPPCoreContext : DbContext
 
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
+    IConfiguration _configuration = new ConfigurationBuilder()
+      .SetBasePath(AppContext.BaseDirectory)
+      .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+      .Build();
+
     if (!optionsBuilder.IsConfigured)
     {
       string sqlConnString = _configuration.GetConnectionString("SqlServer");

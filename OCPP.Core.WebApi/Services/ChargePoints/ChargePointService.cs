@@ -1,26 +1,42 @@
+using ErrorOr;
 using OCPP.Core.Domain.Entities;
+using OCPP.Core.WebApi.Persistence;
 
-namespace OCPP.Core.WebApi.Services.Chargepoints;
+namespace OCPP.Core.WebApi.Services.ChargePoints;
 
 public class ChargePointService : IChargePointService
 {
-  public void AddChargePoint(ChargePoint chargepoint)
+  private readonly OCPPCoreDbContext _context;
+
+  public ChargePointService(OCPPCoreDbContext context)
+  {
+    _context = context;
+  }
+
+  public ErrorOr<ChargePoint> AddChargePoint(ChargePoint chargepoint)
   {
     throw new NotImplementedException();
   }
 
-  public void DeleteChargepoint(int id)
+  public ErrorOr<ChargePoint> GetChargePoint(int id)
   {
     throw new NotImplementedException();
   }
 
-  public void GetChargePoint(int id)
+  public List<ChargePoint> GetChargePoints()
+  {
+    return _context.ChargePoints.ToList();
+  }
+
+  public ErrorOr<ChargePoint> UpsertChargePoint(ChargePoint chargepoint)
   {
     throw new NotImplementedException();
   }
 
-  public void GetChargePoints()
+  public ErrorOr<Deleted> DeleteChargepoint(int id)
   {
     throw new NotImplementedException();
   }
+
+
 }
