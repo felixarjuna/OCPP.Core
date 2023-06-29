@@ -1,6 +1,7 @@
 import axios from "axios";
+import { ChargePoint } from "./contracts";
 // ----------------------------- Charge Point -----------------------------------
-const getChargePoints = async () => {
-  const response = await axios.get("");
+export const getChargePoints = async () => {
+  const response = await axios.get<ChargePoint[]>("http://localhost:5207/api/chargepoints");
   return response.data;
 };
