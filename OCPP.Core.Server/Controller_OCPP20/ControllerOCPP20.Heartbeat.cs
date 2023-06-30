@@ -18,34 +18,29 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using OCPP.Core.Database;
 using OCPP.Core.Server.Messages_OCPP20;
 
-namespace OCPP.Core.Server
+namespace OCPP.Core.Server;
+
+public partial class ControllerOCPP20
 {
-    public partial class ControllerOCPP20
-    {
-        public string HandleHeartBeat(OCPPMessage msgIn, OCPPMessage msgOut)
-        {
-            string errorCode = null;
+  public string HandleHeartBeat(OCPPMessage msgIn, OCPPMessage msgOut)
+  {
+    const string errorCode = null;
 
-            Logger.LogTrace("Processing heartbeat...");
-            HeartbeatResponse heartbeatResponse = new HeartbeatResponse();
-            heartbeatResponse.CustomData = new CustomDataType();
-            heartbeatResponse.CustomData.VendorId = VendorId;
+    Logger.LogTrace("Processing heartbeat...");
+    HeartbeatResponse heartbeatResponse = new HeartbeatResponse();
+    heartbeatResponse.CustomData = new CustomDataType();
+    heartbeatResponse.CustomData.VendorId = VendorId;
 
-            heartbeatResponse.CurrentTime = DateTimeOffset.UtcNow;
+    heartbeatResponse.CurrentTime = DateTimeOffset.UtcNow;
 
-            msgOut.JsonPayload = JsonConvert.SerializeObject(heartbeatResponse);
-            Logger.LogTrace("Heartbeat => Response serialized");
+    msgOut.JsonPayload = JsonConvert.SerializeObject(heartbeatResponse);
+    Logger.LogTrace("Heartbeat => Response serialized");
 
-            WriteMessageLog(ChargePointStatus?.Id, null, msgIn.Action, null, errorCode);
-            return errorCode;
-        }
-    }
+    WriteMessageLog(ChargePointStatus?.Id, null, msgIn.Action, null, errorCode);
+    return errorCode;
+  }
 }
