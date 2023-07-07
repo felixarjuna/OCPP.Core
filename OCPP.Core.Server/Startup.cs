@@ -17,6 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -48,6 +49,7 @@ public class Startup
 
   // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
   //public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+  [Obsolete]
   public void Configure(IApplicationBuilder app,
                       IWebHostEnvironment env,
                       ILoggerFactory loggerFactory)

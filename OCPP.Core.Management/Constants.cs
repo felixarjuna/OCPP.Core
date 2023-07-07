@@ -17,17 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+namespace OCPP.Core.Management;
 
-namespace OCPP.Core.Management
+public static class Constants
 {
-    public class Constants
-    {
-        public static string AdminRoleName = "Administrator";
+  public static readonly string AdminRoleName = "Administrator";
 
-        public static string HomeController = "Home";
-    }
+  public static readonly string HomeController = "Home";
 }
