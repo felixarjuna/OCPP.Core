@@ -1,26 +1,23 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Zap } from "lucide-react";
+import { Leaf } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-export default function Home() {
+export default async function Home() {
   const router = useRouter();
-
   return (
-    <main className="min-h-screen p-10">
-      <div className="min-h-[calc(100vh-80px)] border rounded-xl p-8 flex items-center justify-center">
-        <div className="flex flex-col space-y-6 justify-center items-center">
-          <div className="flex items-center space-x-2">
-            <h1 className="text-5xl ">Welcome to ChargeNow!</h1>
-            <Zap className="h-10 w-10" />
-          </div>
-
-          <Button variant={"secondary"} className="w-fit" onClick={() => router.push("/dashboard")}>
-            Dashboard
-          </Button>
-        </div>
+    <main className="p-10 flex items-center justify-center h-full flex-col space-y-7">
+      <div className="flex items-center flex-col space-y-3">
+        <h1 className="text-5xl gap-3 flex">
+          Welcome to Ploeg!
+          <Leaf className="w-10 h-10" />
+        </h1>
+        <p className="font-extralight">A place where all charge points find its home.</p>
       </div>
+      <Button variant={"secondary"} onClick={() => router.push("/dashboard")}>
+        Dashboard
+      </Button>
     </main>
   );
 }

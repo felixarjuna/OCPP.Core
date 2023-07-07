@@ -2,7 +2,11 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+import { cn } from "@/lib/utils";
 import { Inter } from "next/font/google";
+import { usePathname } from "next/navigation";
+import React from "react";
+import { Sidebar } from "./components/sidebar";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -15,10 +19,21 @@ export const metadata = {
 const queryClient = new QueryClient();
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+
   return (
     <QueryClientProvider client={queryClient}>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <main className="min-h-screen">
+            <div className="p-10">
+              <div className="min-h-[calc(100vh-80px)] border rounded-xl grid lg:grid-cols-5 p-8">
+                <Sidebar />
+                <div className={cn(pathname === "/" ? "col-span-5" : "col-span-4")}>{children}</div>
+              </div>
+            </div>
+          </main>
+        </body>
       </html>
     </QueryClientProvider>
   );

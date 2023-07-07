@@ -41,7 +41,7 @@ public partial class ControllerOCPP20
 
       BootNotificationResponse bootNotificationResponse = new BootNotificationResponse();
       bootNotificationResponse.CurrentTime = DateTimeOffset.UtcNow;
-      bootNotificationResponse.Interval = 300;    // 300 seconds
+      bootNotificationResponse.Interval = 10;    // 10 seconds
 
       bootNotificationResponse.StatusInfo = new StatusInfoType();
       bootNotificationResponse.StatusInfo.ReasonCode = string.Empty;

@@ -10,8 +10,8 @@ import {
   ChevronDown,
   Clock,
   CreditCard,
-  Feather,
   Home,
+  Leaf,
   MapPin,
   TrendingUp,
   Users,
@@ -27,12 +27,18 @@ export const Sidebar = ({ className }: SidebarProps) => {
   const [showStationsMenu, setShowStationsMenu] = React.useState<boolean>(false);
 
   const pathName = usePathname();
+
   return (
-    <div className={cn("pb-12", className)}>
+    <div className={cn("pb-12", className, pathName === "/" && "hidden")}>
       <div className="space-y-4 py-4">
-        <div className="flex px-4 space-x-2">
-          <Feather />
-          <h2 className="mb-2 text-lg font-semibold tracking-tight">ChargeNow</h2>
+        <div className="flex px-4 justify-between items-center">
+          <div className="flex space-x-2 items-center">
+            <Leaf />
+            <h2 className="text-lg font-semibold tracking-tight">Ploeg</h2>
+          </div>
+          {/* <Button variant={"ghost"} size="icon">
+            <ArrowLeftToLine className="w-5 h-5" />
+          </Button> */}
         </div>
         <div className="px-3 py-2">
           <div className="space-y-1">
@@ -100,6 +106,9 @@ export const Sidebar = ({ className }: SidebarProps) => {
             <Button
               variant={pathName === "/tariffs" ? "secondary" : "ghost"}
               className="w-full justify-start"
+              onClick={() => {
+                router.push("/tariffs");
+              }}
             >
               <CreditCard className="mr-2 h-4 w-4" />
               Tariffs
@@ -107,6 +116,9 @@ export const Sidebar = ({ className }: SidebarProps) => {
             <Button
               variant={pathName === "/reporting" ? "secondary" : "ghost"}
               className="w-full justify-start"
+              onClick={() => {
+                router.push("/reporting");
+              }}
             >
               <TrendingUp className="mr-2 h-4 w-4" />
               Reporting
@@ -114,6 +126,9 @@ export const Sidebar = ({ className }: SidebarProps) => {
             <Button
               variant={pathName === "/drivers" ? "secondary" : "ghost"}
               className="w-full justify-start"
+              onClick={() => {
+                router.push("/drivers");
+              }}
             >
               <Users className="mr-2 h-4 w-4" />
               Drivers

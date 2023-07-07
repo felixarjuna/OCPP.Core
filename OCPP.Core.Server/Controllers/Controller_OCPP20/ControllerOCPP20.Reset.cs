@@ -22,6 +22,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using OCPP.Core.Server.Messages_OCPP20;
 
+#pragma warning disable // Disable all warnings
 namespace OCPP.Core.Server;
 
 public partial class ControllerOCPP20

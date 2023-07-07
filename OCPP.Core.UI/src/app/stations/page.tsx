@@ -8,9 +8,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+
+import { useChargePoints } from "@/hooks/useChargePoints";
 import { columns } from "../components/stations/columns";
 import DataTable from "../components/stations/data-table";
-import { useChargePoints } from "../hooks/useChargePoints";
 
 export default function Home() {
   const { stations } = useChargePoints();

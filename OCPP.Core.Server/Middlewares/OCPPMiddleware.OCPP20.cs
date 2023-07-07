@@ -13,6 +13,7 @@ using OCPP.Core.Server.Messages_OCPP20;
 
 namespace OCPP.Core.Server;
 
+#pragma warning disable // Disable all warnings
 public partial class OCPPMiddleware
 {
   /// <summary>
@@ -59,15 +60,15 @@ public partial class OCPPMiddleware
           string ocppMessage = UTF8Encoding.UTF8.GetString(bMessage);
 
           Match match = Regex.Match(ocppMessage, MessageRegExp);
-          if (match != null && match.Groups != null && match.Groups.Count >= 3)
+          if (match?.Groups?.Count >= 3)
           {
             string messageTypeId = match.Groups[1].Value;
             string uniqueId = match.Groups[2].Value;
             string action = match.Groups[3].Value;
-            string jsonPaylod = match.Groups[4].Value;
+            string jsonPayload = match.Groups[4].Value;
             logger.LogInformation("OCPPMiddleware.Receive20 => OCPP-Message: Type={0} / ID={1} / Action={2})", messageTypeId, uniqueId, action);
 
-            OCPPMessage msgIn = new OCPPMessage(messageTypeId, uniqueId, action, jsonPaylod);
+            OCPPMessage msgIn = new(messageTypeId, uniqueId, action, jsonPayload);
             if (msgIn.MessageType == "2")
             {
               // Request from chargepoint to OCPP server

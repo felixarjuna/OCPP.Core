@@ -27,7 +27,7 @@ namespace OCPP.Core.Server;
 
 public partial class ControllerOCPP20 : ControllerBase
 {
-  public const string VendorId = "dallmann consulting GmbH";
+  public const string VendorId = "Ploeg GmbH";
 
   /// <summary>
   /// Constructor
@@ -168,7 +168,7 @@ public partial class ControllerOCPP20 : ControllerBase
 
         if (doLog)
         {
-          using OCPPCoreContext dbContext = new OCPPCoreContext(Configuration);
+          using OCPPCoreContext dbContext = new(Configuration);
           MessageLog msgLog = new()
           {
             ChargePointId = chargePointId,
