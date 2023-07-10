@@ -1,0 +1,13 @@
+<svg width="268" height="206" viewBox="0 0 268 206" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="99" cy="50" r="12.5" fill="white" stroke="white"/>
+<circle cx="134" cy="93" r="12.5" fill="white" stroke="white"/>
+<circle cx="160" cy="50" r="12.5" fill="white" stroke="white"/>
+<circle cx="196" cy="93" r="12.5" fill="white" stroke="white"/>
+<circle cx="72" cy="93" r="12.5" fill="white" stroke="white"/>
+<circle cx="99" cy="136" r="12.5" fill="white" stroke="white"/>
+<circle cx="160" cy="136" r="12.5" fill="white" stroke="white"/>
+<mask id="path-8-inside-1_798_48" fill="white">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M20.9668 0C7.69269 20.7958 0 45.4995 0 72C0 146.006 59.9938 206 134 206C208.006 206 268 146.006 268 72C268 45.4995 260.307 20.7958 247.033 0H20.9668Z"/>
+</mask>
+<path d="M20.9668 0V-15H12.7461L8.32305 -8.07063L20.9668 0ZM247.033 0L259.677 -8.07064L255.254 -15H247.033V0ZM15 72C15 48.4434 21.8293 26.5276 33.6106 8.07063L8.32305 -8.07063C-6.44394 15.0639 -15 42.5557 -15 72H15ZM134 191C68.2781 191 15 137.722 15 72H-15C-15 154.29 51.7096 221 134 221V191ZM253 72C253 137.722 199.722 191 134 191V221C216.29 221 283 154.29 283 72H253ZM234.389 8.07064C246.171 26.5276 253 48.4434 253 72H283C283 42.5557 274.444 15.0639 259.677 -8.07064L234.389 8.07064ZM247.033 -15H20.9668V15H247.033V-15Z" fill="white" mask="url(#path-8-inside-1_798_48)"/>
+</svg>

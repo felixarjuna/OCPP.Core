@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <QueryClientProvider client={queryClient}>
       <html lang="en">
-        <body className={inter.className}>
+        <body className={inter.className} suppressHydrationWarning>
           <main className="min-h-screen">
             <div className="p-10">
               <div className="min-h-[calc(100vh-80px)] border rounded-xl grid lg:grid-cols-5 p-8">
