@@ -6,13 +6,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChargePoint } from "@/lib/contracts";
+import { ChargeStation } from "@/lib/contracts";
 import { type ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, Pen, Trash } from "lucide-react";
 import Link from "next/link";
 import { DataTableColumnHeader } from "./data-table-column-header";
 
-export const columns: ColumnDef<ChargePoint>[] = [
+export const columns: ColumnDef<ChargeStation>[] = [
   {
     accessorKey: "station",
     header: ({ column }) => (
