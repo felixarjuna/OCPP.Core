@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation";
 export const StationLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   return (
-    <main className="col-span-4 p-5 space-y-5">
+    <main className="col-span-4 pt-5 space-y-5">
       <section className="flex justify-between">
         <div className="ml-4">
           <div className="flex gap-2 items-center">
