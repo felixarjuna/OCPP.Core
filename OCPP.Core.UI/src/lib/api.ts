@@ -7,7 +7,11 @@ export const getChargePoints = async () => {
 };
 
 export const createChargePoint = async (request: ChargeStation) => {
-  console.log(request);
   const response = await axios.post("http://localhost:5207/api/chargepoints", request);
+  return response.data;
+};
+
+export const deleteChargePoint = async (stationId: string) => {
+  const response = await axios.delete(`http://localhost:5207/api/chargepoints/${stationId}`);
   return response.data;
 };

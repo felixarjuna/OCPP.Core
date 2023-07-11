@@ -56,6 +56,4 @@ public class ChargePointService : IChargePointService
     _context.SaveChanges();
     return Result.Deleted;
   }
-
-
 }

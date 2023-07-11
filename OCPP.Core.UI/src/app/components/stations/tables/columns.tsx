@@ -6,6 +6,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { deleteChargePoint } from "@/lib/api";
 import { ChargeStation } from "@/lib/contracts";
 import { type ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, Pen, Trash } from "lucide-react";
@@ -72,7 +73,10 @@ export const columns: ColumnDef<ChargeStation>[] = [
               <Pen className="text-primary-foreground/70 mr-2 h-3.5 w-3.5 group-hover:text-black/70" />
               <Link href={`/admin/products/update/${row.original.chargePointId}`}>Edit</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => {}} className="group">
+            <DropdownMenuItem
+              onClick={() => deleteChargePoint(row.original.chargePointId)}
+              className="group"
+            >
               <Trash className="text-primary-foreground/70 mr-2 h-3.5 w-3.5 group-hover:text-black/70" />
               Delete
             </DropdownMenuItem>
