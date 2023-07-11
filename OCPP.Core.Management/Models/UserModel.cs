@@ -17,19 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+namespace OCPP.Core.Management.Models;
 
-namespace OCPP.Core.Management.Models
+public class UserModel
 {
-    public class UserModel
-    {
-        public string Username { get; set; }
+  public string Username { get; set; }
 
-        public string Password { get; set; }
+  public string Password { get; set; }
 
-        public bool IsAdmin { get; set; }
-    }
+  public bool IsAdmin { get; set; }
 }

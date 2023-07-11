@@ -88,7 +88,6 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                   className="hover:bg-muted/20"
-                  onClick={() => router.push(`stations/${row.original.chargePointId}`)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="pl-5">
