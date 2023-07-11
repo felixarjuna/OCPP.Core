@@ -1,8 +1,12 @@
-export type ChargePoint = {
-  chargePointId: string;
-  name: string;
-  comment: string;
-  username: string;
-  password: string;
-  clientCertThumb: string;
-};
+import { z } from "zod";
+
+export type ChargeStation = z.infer<typeof chargeStationSchema>;
+
+export const chargeStationSchema = z.object({
+  chargePointId: z.string().min(2, { message: "Station Id must be at least 2 characters." }),
+  name: z.string().min(2, { message: "Station name must be at least 2 characters." }),
+  comment: z.string(),
+  username: z.string(),
+  password: z.string(),
+  clientCertThumb: z.string(),
+});

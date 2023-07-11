@@ -2,6 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import { Inter } from "next/font/google";
 import { usePathname } from "next/navigation";
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div className="min-h-[calc(100vh-80px)] border rounded-xl grid lg:grid-cols-5 p-8">
                 <Sidebar />
                 <div className={cn(pathname === "/" ? "col-span-5" : "col-span-4")}>{children}</div>
+                <Toaster />
               </div>
             </div>
           </main>
