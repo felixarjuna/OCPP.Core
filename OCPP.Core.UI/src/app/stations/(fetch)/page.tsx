@@ -1,5 +1,7 @@
 "use client";
 
+import { columns } from "@/app/components/stations/tables/columns";
+import DataTable from "@/app/components/stations/tables/data-table";
 import {
   Select,
   SelectContent,
@@ -9,8 +11,6 @@ import {
 } from "@/components/ui/select";
 
 import { useChargePoints } from "@/hooks/useChargePoints";
-import { columns } from "../components/stations/columns";
-import DataTable from "../components/stations/data-table";
 
 export default function Home() {
   const { stations } = useChargePoints();
