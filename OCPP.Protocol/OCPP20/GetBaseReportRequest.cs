@@ -1,21 +1,11 @@
 using Newtonsoft.Json;
 
 #pragma warning disable // Disable all warnings
-namespace OCPP.Protocol;
+namespace OCPP.Protocol.OCPP20;
 
 /// <summary>
 /// This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.
 /// </summary>
-public class CustomDataType
-{
-  [JsonProperty("vendorId", NullValueHandling = NullValueHandling.Ignore)]
-  string VendorId { get; set; }
-
-  /// <summary>
-  /// This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.
-  /// </summary>
-  public object this[string k] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-}
 
 public class GetBaseReportRequest
 {
