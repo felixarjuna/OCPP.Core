@@ -95,9 +95,12 @@ public enum ConnectorStatusEnum
   [EnumMember(Value = "Occupied")]
   Occupied = 2,
 
+  [EnumMember(Value = "Reserved")]
+  Reserved = 3,
+
   [EnumMember(Value = "Unavailable")]
-  Unavailable = 3,
+  Unavailable = 4,
 
   [EnumMember(Value = "Faulted")]
-  Faulted = 4
+  Faulted = 5
 }
