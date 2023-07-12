@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\OCPP.Core.Contracts\OCPP.Core.Contracts.csproj" />
     <ProjectReference Include="..\OCPP.Core.Domain\OCPP.Core.Domain.csproj" />
+    <ProjectReference Include="..\OCPP.Protocol\OCPP.Protocol.csproj" />
   </ItemGroup>
 
 </Project>

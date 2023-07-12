@@ -1,5 +1,6 @@
 using OCPP.Core.Domain.Entities;
 using OCPP.Core.WebApi.Services.Log;
+using OCPP.Protocol.OCPP20;
 
 namespace OCPP.Core.WebApi.Services.OCPP;
 
@@ -73,24 +74,24 @@ public partial class OCPPService : OCPPBaseService, IOCPPService
           break;
 
         default:
-          // errorCode = ErrorCodes.NotSupported;
-          // _logService.WriteMessageLog("", null, messageIn.Action, messageIn.JsonPayload, errorCode);
+          errorCode = ErrorCodes.NotSupported;
+          _logService.WriteMessageLog("", null, messageIn.Action, messageIn.JsonPayload, errorCode);
           break;
       }
     }
     else
     {
       Console.WriteLine("ControllerOCPP20 => Protocol error: Wrong message type {0}", messageIn.MessageType);
-      // errorCode = ErrorCodes.ProtocolError;
+      errorCode = ErrorCodes.ProtocolError;
     }
 
-    // if (!string.IsNullOrEmpty(errorCode))
-    // {
-    //   // Invalid message type => return type "4" (CALLERROR)
-    //   msgOut.MessageType = "4";
-    //   msgOut.ErrorCode = errorCode;
-    //   Console.WriteLine("ControllerOCPP20 => Return error code message: ErrorCode={0}", errorCode);
-    // }
+    if (!string.IsNullOrEmpty(errorCode))
+    {
+      // Invalid message type => return type "4" (CALLERROR)
+      msgOut.MessageType = "4";
+      msgOut.ErrorCode = errorCode;
+      Console.WriteLine("ControllerOCPP20 => Return error code message: ErrorCode={0}", errorCode);
+    }
 
     return msgOut;
   }
