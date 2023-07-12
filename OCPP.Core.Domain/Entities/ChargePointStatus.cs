@@ -12,9 +12,9 @@ public class ChargePointStatus
 
   private ChargePointStatus() { }
 
-  public ChargePointStatus(ChargePoint chargePoint)
+  public ChargePointStatus(ChargeStation chargePoint)
   {
-    Id = chargePoint.ChargePointId;
+    Id = chargePoint.ChargeStationId;
     Name = chargePoint.Name;
   }
 

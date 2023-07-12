@@ -4,7 +4,7 @@ namespace OCPP.Core.Domain.Common.Errors;
 
 public static class Errors
 {
-  public static class ChargePoint
+  public static class ChargeStation
   {
     public static Error NotFound => Error.NotFound(
       code: "ChargePoint:NotFound",

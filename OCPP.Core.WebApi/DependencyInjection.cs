@@ -1,7 +1,7 @@
 using System.Reflection;
 using Mapster;
 using MapsterMapper;
-using OCPP.Core.WebApi.Services.ChargePoints;
+using OCPP.Core.WebApi.Services.ChargeStations;
 
 namespace OCPP.Core.WebApi;
 
@@ -11,7 +11,7 @@ public static class DependencyInjection
     this IServiceCollection services)
   {
     services.AddMappings();
-    services.AddScoped<IChargePointService, ChargePointService>();
+    services.AddScoped<IChargeStationService, ChargeStationService>();
 
     return services;
   }

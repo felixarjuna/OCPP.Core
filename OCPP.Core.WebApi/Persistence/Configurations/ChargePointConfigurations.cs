@@ -4,16 +4,16 @@ using OCPP.Core.Domain.Entities;
 
 namespace OCPP.Core.WebApi.Persistence.Configurations;
 
-public class ChargePointConfigurations : IEntityTypeConfiguration<ChargePoint>
+public class ChargePointConfigurations : IEntityTypeConfiguration<ChargeStation>
 {
-  public void Configure(EntityTypeBuilder<ChargePoint> builder)
+  public void Configure(EntityTypeBuilder<ChargeStation> builder)
   {
     builder.ToTable("ChargePoint");
 
-    builder.HasIndex(e => e.ChargePointId, "ChargePoint_Identifier")
+    builder.HasIndex(e => e.ChargeStationId, "ChargePoint_Identifier")
               .IsUnique();
 
-    builder.Property(e => e.ChargePointId).HasMaxLength(100);
+    builder.Property(e => e.ChargeStationId).HasMaxLength(100);
 
     builder.Property(e => e.Comment).HasMaxLength(200);
 

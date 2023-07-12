@@ -1,48 +1,48 @@
 using ErrorOr;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
-using OCPP.Core.Contracts.Chargepoint;
+using OCPP.Core.Contracts.ChargeStation;
 using OCPP.Core.Domain.Entities;
-using OCPP.Core.WebApi.Services.ChargePoints;
+using OCPP.Core.WebApi.Services.ChargeStations;
 
 namespace OCPP.Core.WebApi.Controllers;
 
 [Route("api/[controller]")]
-public class ChargePointsController : ApiController
+public class ChargeStationsController : ApiController
 {
-  private readonly IChargePointService _chargePointService;
+  private readonly IChargeStationService _chargeStationService;
   private readonly IMapper _mapper;
 
-  public ChargePointsController(IChargePointService chargePointService, IMapper mapper)
+  public ChargeStationsController(IChargeStationService ChargeStationService, IMapper mapper)
   {
-    _chargePointService = chargePointService;
+    _chargeStationService = ChargeStationService;
     _mapper = mapper;
   }
 
   [HttpPost]
-  public IActionResult CreateChargePoint([FromBody] CreateChargePointRequest request)
+  public IActionResult CreateChargeStation([FromBody] CreateChargeStationRequest request)
   {
-    var chargepoint = _mapper.Map<ChargePoint>(request);
+    var ChargeStation = _mapper.Map<ChargeStation>(request);
 
-    ErrorOr<ChargePoint> result = _chargePointService.AddChargePoint(chargepoint);
+    ErrorOr<ChargeStation> result = _chargeStationService.AddChargeStation(ChargeStation);
     return result.Match(
       (res) => CreatedAtAction(
-        actionName: "CreateChargePoint",
-        routeValues: new { id = chargepoint.ChargePointId },
+        actionName: "CreateChargeStation",
+        routeValues: new { id = ChargeStation.ChargeStationId },
         value: res),
       (err) => Problem(err));
   }
 
   [HttpGet]
-  public IActionResult GetAllChargePoints()
+  public IActionResult GetAllChargeStations()
   {
-    return Ok(_chargePointService.GetChargePoints());
+    return Ok(_chargeStationService.GetChargeStations());
   }
 
   [HttpGet("{id}")]
-  public IActionResult GetChargePoint(string id)
+  public IActionResult GetChargeStation(string id)
   {
-    ErrorOr<ChargePoint> result = _chargePointService.GetChargePoint(id);
+    ErrorOr<ChargeStation> result = _chargeStationService.GetChargeStationById(id);
 
     return result.Match(
       (res) => Ok(res),
@@ -50,22 +50,22 @@ public class ChargePointsController : ApiController
   }
 
   [HttpPut("{id}")]
-  public IActionResult UpsertChargePoint(string id, [FromBody] UpsertChargePointRequest request)
+  public IActionResult UpsertChargeStation(string id, [FromBody] UpsertChargeStationRequest request)
   {
-    if (id != request.ChargePointId) return BadRequest();
+    if (id != request.ChargeStationId) return BadRequest();
 
-    var chargepoint = _mapper.Map<ChargePoint>(request);
+    var ChargeStation = _mapper.Map<ChargeStation>(request);
 
-    ErrorOr<ChargePoint> result = _chargePointService.UpsertChargePoint(chargepoint);
+    ErrorOr<ChargeStation> result = _chargeStationService.UpsertChargeStation(ChargeStation);
     return result.Match(
       _ => NoContent(),
       (err) => Problem(err));
   }
 
   [HttpDelete("{id}")]
-  public IActionResult DeleteChargePoint(string id)
+  public IActionResult DeleteChargeStation(string id)
   {
-    ErrorOr<Deleted> result = _chargePointService.DeleteChargepoint(id);
+    ErrorOr<Deleted> result = _chargeStationService.DeleteChargeStation(id);
 
     return result.Match(
       (_) => NoContent(),

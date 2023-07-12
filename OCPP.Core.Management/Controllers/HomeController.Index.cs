@@ -156,7 +156,6 @@ public partial class HomeController : BaseController
           }
         }
 
-
         // List of configured charge points
         List<ChargePoint> dbChargePoints = dbContext.ChargePoints.ToList<ChargePoint>();
         if (dbChargePoints != null)

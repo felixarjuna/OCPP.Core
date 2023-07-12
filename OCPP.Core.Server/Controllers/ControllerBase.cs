@@ -40,7 +40,7 @@ public partial class ControllerBase
   }
 
   /// <summary>
-  /// Helper function for creating and updating the ConnectorStatus in then database
+  /// Helper function for creating and updating the ConnectorStatus in the database
   /// </summary>
   protected bool UpdateConnectorStatus(int connectorId, string status, DateTimeOffset? statusTime, double? meter, DateTimeOffset? meterTime)
   {

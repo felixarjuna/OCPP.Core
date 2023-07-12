@@ -1,13 +1,13 @@
 ﻿#nullable disable
-using OCPP.Core.Contracts.Chargepoint;
+using OCPP.Core.Contracts.ChargeStation;
 
 namespace OCPP.Core.Domain.Entities;
 
-public partial class ChargePoint
+public partial class ChargeStation
 {
-  public ChargePoint() => Transactions = new HashSet<Transaction>();
+  public ChargeStation() => Transactions = new HashSet<Transaction>();
 
-  public string ChargePointId { get; set; }
+  public string ChargeStationId { get; set; }
   public string Name { get; set; }
   public string Comment { get; set; }
   public string Username { get; set; }
@@ -16,15 +16,15 @@ public partial class ChargePoint
 
   public virtual ICollection<Transaction> Transactions { get; set; }
 
-  private ChargePoint(
-    string chargePointId,
+  private ChargeStation(
+    string chargeStationId,
     string name,
     string comment,
     string username,
     string password,
     string clientCert)
   {
-    ChargePointId = chargePointId;
+    ChargeStationId = chargeStationId;
     Name = name;
     Comment = comment;
     Username = username;
@@ -32,16 +32,16 @@ public partial class ChargePoint
     ClientCertThumb = clientCert;
   }
 
-  public static ChargePoint Create(
-    string ChargePointId,
+  public static ChargeStation Create(
+    string chargeStationId,
     string Name,
     string Comment,
     string Username,
     string Password,
     string ClientCertThumb)
   {
-    return new ChargePoint(
-      ChargePointId,
+    return new ChargeStation(
+      chargeStationId,
       Name,
       Comment,
       Username,
@@ -49,10 +49,10 @@ public partial class ChargePoint
       ClientCertThumb);
   }
 
-  public static ChargePoint From(CreateChargePointRequest request)
+  public static ChargeStation From(CreateChargeStationRequest request)
   {
     return Create(
-      request.ChargePointId,
+      request.ChargeStationId,
       request.Name,
       request.Comment,
       request.Username,
@@ -60,10 +60,10 @@ public partial class ChargePoint
       request.ClientCertThumb);
   }
 
-  public static ChargePoint From(UpsertChargePointRequest request)
+  public static ChargeStation From(UpsertChargeStationRequest request)
   {
     return Create(
-      request.ChargePointId,
+      request.ChargeStationId,
       request.Name,
       request.Comment,
       request.Username,
