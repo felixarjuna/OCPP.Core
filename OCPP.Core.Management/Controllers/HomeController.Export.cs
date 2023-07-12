@@ -95,10 +95,10 @@ public partial class HomeController : BaseController
         // default: combined name with charge point and connector
         if (string.IsNullOrEmpty(currentConnectorName))
         {
-          tlvm.ChargePoints = dbContext.ChargePoints.ToList<ChargePoint>();
-          foreach (ChargePoint cp in tlvm.ChargePoints)
+          tlvm.ChargePoints = dbContext.ChargeStations.ToList<ChargeStation>();
+          foreach (ChargeStation cp in tlvm.ChargePoints)
           {
-            if (cp.ChargePointId == Id)
+            if (cp.ChargeStationId == Id)
             {
               currentConnectorName = $"{cp.Name}:{currentConnectorId}";
               break;

@@ -52,7 +52,7 @@ public partial class ApiController : BaseController
       {
         using (OCPPCoreContext dbContext = new OCPPCoreContext(this.Config))
         {
-          ChargePoint chargePoint = dbContext.ChargePoints.Find(Id);
+          ChargeStation chargePoint = dbContext.ChargeStations.Find(Id);
           if (chargePoint != null)
           {
             string serverApiUrl = base.Config.GetValue<string>("ServerApiUrl");

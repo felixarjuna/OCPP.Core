@@ -70,7 +70,7 @@ public partial class HomeController : BaseController
       using (OCPPCoreContext dbContext = new OCPPCoreContext(this.Config))
       {
         Logger.LogTrace("Transactions: Loading charge points...");
-        tlvm.ChargePoints = dbContext.ChargePoints.ToList<ChargePoint>();
+        tlvm.ChargePoints = dbContext.ChargeStations.ToList<ChargeStation>();
 
         Logger.LogTrace("Transactions: Loading charge points connectors...");
         tlvm.ConnectorStatuses = dbContext.ConnectorStatuses.ToList<ConnectorStatus>();

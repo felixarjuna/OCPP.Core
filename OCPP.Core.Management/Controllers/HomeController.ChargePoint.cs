@@ -47,18 +47,18 @@ public partial class HomeController : BaseController
       using (OCPPCoreContext dbContext = new OCPPCoreContext(this.Config))
       {
         Logger.LogTrace("ChargePoint: Loading charge points...");
-        List<ChargePoint> dbChargePoints = dbContext.ChargePoints.ToList<ChargePoint>();
+        List<ChargeStation> dbChargePoints = dbContext.ChargeStations.ToList<ChargeStation>();
         Logger.LogInformation("ChargePoint: Found {0} charge points", dbChargePoints.Count);
 
-        ChargePoint currentChargePoint = null;
+        ChargeStation currentChargePoint = null;
         if (!string.IsNullOrEmpty(Id))
         {
-          foreach (ChargePoint cp in dbChargePoints)
+          foreach (ChargeStation cp in dbChargePoints)
           {
-            if (cp.ChargePointId.Equals(Id, StringComparison.InvariantCultureIgnoreCase))
+            if (cp.ChargeStationId.Equals(Id, StringComparison.InvariantCultureIgnoreCase))
             {
               currentChargePoint = cp;
-              Logger.LogTrace("ChargePoint: Current charge point: {0} / {1}", cp.ChargePointId, cp.Name);
+              Logger.LogTrace("ChargePoint: Current charge point: {0} / {1}", cp.ChargeStationId, cp.Name);
               break;
             }
           }
@@ -82,9 +82,9 @@ public partial class HomeController : BaseController
             if (string.IsNullOrEmpty(errorMsg))
             {
               // check if duplicate
-              foreach (ChargePoint cp in dbChargePoints)
+              foreach (ChargeStation cp in dbChargePoints)
               {
-                if (cp.ChargePointId.Equals(cpvm.ChargePointId, StringComparison.InvariantCultureIgnoreCase))
+                if (cp.ChargeStationId.Equals(cpvm.ChargePointId, StringComparison.InvariantCultureIgnoreCase))
                 {
                   // id already exists
                   errorMsg = _localizer["ChargePointIdExists"].Value;
@@ -97,14 +97,14 @@ public partial class HomeController : BaseController
             if (string.IsNullOrEmpty(errorMsg))
             {
               // Save tag in DB
-              ChargePoint newChargePoint = new ChargePoint();
-              newChargePoint.ChargePointId = cpvm.ChargePointId;
+              ChargeStation newChargePoint = new ChargeStation();
+              newChargePoint.ChargeStationId = cpvm.ChargePointId;
               newChargePoint.Name = cpvm.Name;
               newChargePoint.Comment = cpvm.Comment;
               newChargePoint.Username = cpvm.Username;
               newChargePoint.Password = cpvm.Password;
               newChargePoint.ClientCertThumb = cpvm.ClientCertThumb;
-              dbContext.ChargePoints.Add(newChargePoint);
+              dbContext.ChargeStations.Add(newChargePoint);
               dbContext.SaveChanges();
               Logger.LogInformation("ChargePoint: New => charge point saved: {0} / {1}", cpvm.ChargePointId, cpvm.Name);
             }
@@ -114,7 +114,7 @@ public partial class HomeController : BaseController
               return View("ChargePointDetail", cpvm);
             }
           }
-          else if (currentChargePoint.ChargePointId == Id)
+          else if (currentChargePoint.ChargeStationId == Id)
           {
             // Save existing charge point
             Logger.LogTrace("ChargePoint: Saving charge point '{0}'", Id);
@@ -140,7 +140,7 @@ public partial class HomeController : BaseController
           if (currentChargePoint != null)
           {
             cpvm = new ChargePointViewModel();
-            cpvm.ChargePointId = currentChargePoint.ChargePointId;
+            cpvm.ChargePointId = currentChargePoint.ChargeStationId;
             cpvm.Name = currentChargePoint.Name;
             cpvm.Comment = currentChargePoint.Comment;
             cpvm.Username = currentChargePoint.Username;

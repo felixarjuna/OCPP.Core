@@ -25,7 +25,7 @@ namespace OCPP.Core.Management.Models;
 
 public class ChargePointViewModel
 {
-  public List<ChargePoint> ChargePoints { get; set; }
+  public List<ChargeStation> ChargePoints { get; set; }
 
   public string CurrentId { get; set; }
 

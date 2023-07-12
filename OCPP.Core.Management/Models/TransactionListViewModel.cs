@@ -24,7 +24,7 @@ namespace OCPP.Core.Management.Models;
 
 public class TransactionListViewModel
 {
-  public List<ChargePoint> ChargePoints { get; set; }
+  public List<ChargeStation> ChargePoints { get; set; }
 
   public List<ConnectorStatus> ConnectorStatuses { get; set; }
 

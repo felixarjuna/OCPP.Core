@@ -157,14 +157,14 @@ public partial class HomeController : BaseController
         }
 
         // List of configured charge points
-        List<ChargePoint> dbChargePoints = dbContext.ChargePoints.ToList<ChargePoint>();
+        List<ChargeStation> dbChargePoints = dbContext.ChargeStations.ToList<ChargeStation>();
         if (dbChargePoints != null)
         {
           // Iterate through all charge points in database
-          foreach (ChargePoint cp in dbChargePoints)
+          foreach (ChargeStation cp in dbChargePoints)
           {
             ChargePointStatus cpOnlineStatus = null;
-            dictOnlineStatus.TryGetValue(cp.ChargePointId, out cpOnlineStatus);
+            dictOnlineStatus.TryGetValue(cp.ChargeStationId, out cpOnlineStatus);
 
             // Preference: Check for connectors status in database
             bool foundConnectorStatus = false;
@@ -172,18 +172,18 @@ public partial class HomeController : BaseController
             {
               foreach (ConnectorStatusView connStatus in connectorStatusViewList)
               {
-                if (string.Equals(cp.ChargePointId, connStatus.ChargePointId, StringComparison.InvariantCultureIgnoreCase))
+                if (string.Equals(cp.ChargeStationId, connStatus.ChargePointId, StringComparison.InvariantCultureIgnoreCase))
                 {
                   foundConnectorStatus = true;
 
                   ChargePointsOverviewViewModel cpovm = new ChargePointsOverviewViewModel();
-                  cpovm.ChargePointId = cp.ChargePointId;
+                  cpovm.ChargePointId = cp.ChargeStationId;
                   cpovm.ConnectorId = connStatus.ConnectorId;
                   if (string.IsNullOrWhiteSpace(connStatus.ConnectorName))
                   {
                     // No connector name specified => use default
-                    if (dictConnectorCount.ContainsKey(cp.ChargePointId) &&
-                        dictConnectorCount[cp.ChargePointId] > 1)
+                    if (dictConnectorCount.ContainsKey(cp.ChargeStationId) &&
+                        dictConnectorCount[cp.ChargeStationId] > 1)
                     {
                       // more than 1 connector => "<charge point name>:<connector no.>"
                       cpovm.Name = $"{cp.Name}:{connStatus.ConnectorId}";
@@ -261,7 +261,7 @@ public partial class HomeController : BaseController
             {
               // no connector status found in DB => show configured charge point in overview
               ChargePointsOverviewViewModel cpovm = new ChargePointsOverviewViewModel();
-              cpovm.ChargePointId = cp.ChargePointId;
+              cpovm.ChargePointId = cp.ChargeStationId;
               cpovm.ConnectorId = 0;
               cpovm.Name = cp.Name;
               cpovm.Comment = cp.Comment;
