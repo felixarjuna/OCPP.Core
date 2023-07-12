@@ -1,13 +1,13 @@
 "use client";
 
 import { useToast } from "@/components/ui/use-toast";
-import { createChargePoint, getChargePoints } from "@/lib/api";
+import { createChargeStation, getChargeStations } from "@/lib/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useChargePoints = () => {
   const { data: stations, isLoading } = useQuery({
     queryKey: ["chargestations"],
-    queryFn: getChargePoints,
+    queryFn: getChargeStations,
     initialData: [],
   });
 
@@ -20,7 +20,7 @@ export const useChargePointEvents = (stationId: string) => {
   const queryClient = useQueryClient();
   const onCreateChargeStation = useMutation({
     mutationKey: ["chargestations", stationId],
-    mutationFn: createChargePoint,
+    mutationFn: createChargeStation,
     onSuccess: () => {
       queryClient.invalidateQueries(["chargestations"]);
       toast({

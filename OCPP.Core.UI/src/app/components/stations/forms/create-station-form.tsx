@@ -21,7 +21,7 @@ export const CreateStationForm = () => {
   const form = useForm<ChargeStation>({
     resolver: zodResolver(chargeStationSchema),
     defaultValues: {
-      chargePointId: "",
+      chargeStationId: "",
       name: "",
       comment: "",
       username: "",
@@ -30,7 +30,7 @@ export const CreateStationForm = () => {
     },
   });
 
-  const { onCreateChargeStation } = useChargePointEvents(form.getValues().chargePointId);
+  const { onCreateChargeStation } = useChargePointEvents(form.getValues().chargeStationId);
   // Define submit handler
   const onSubmit = (values: ChargeStation) => {
     onCreateChargeStation.mutate(values);
@@ -42,7 +42,7 @@ export const CreateStationForm = () => {
         <div className="grid grid-cols-2 gap-x-5 gap-y-3">
           <FormField
             control={form.control}
-            name="chargePointId"
+            name="chargeStationId"
             render={({ field }) => (
               <FormItem className="col-span-1">
                 <FormLabel>Station Id</FormLabel>
