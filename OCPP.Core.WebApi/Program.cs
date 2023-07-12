@@ -1,4 +1,5 @@
 using OCPP.Core.WebApi;
+using OCPP.Core.WebApi.Middlewares;
 using OCPP.Core.WebApi.Persistence;
 
 var allowAllOrigins = "_allowAllOrigins";
@@ -31,6 +32,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseOCPP();
 app.UseCors(allowAllOrigins);
 app.UseAuthorization();
 
