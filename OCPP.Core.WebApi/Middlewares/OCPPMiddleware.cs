@@ -6,6 +6,7 @@ using OCPP.Core.WebApi.Services.ChargeStations;
 using System.Security.Cryptography.X509Certificates;
 using OCPP.Core.WebApi.Common;
 using System.Net.WebSockets;
+using OCPP.Core.WebApi.Services.Messages;
 
 namespace OCPP.Core.WebApi.Middlewares;
 // #pragma warning disable // Disable all warnings
@@ -18,7 +19,7 @@ public class OCPPMiddleware
     _next = next;
   }
 
-  public async Task InvokeAsync(HttpContext context, IChargeStationService _chargeStationService)
+  public async Task InvokeAsync(HttpContext context, IChargeStationService _chargeStationService, IMessageService _messageService)
   {
     Console.WriteLine("OCPPMiddleware => Websocket request: Path='{0}'", context.Request.Path);
 
@@ -74,9 +75,9 @@ public class OCPPMiddleware
     status.WebSocket = webSocket;
 
     if (protocol == Defaults.Protocol_OCPP20)
-      await Receive20(status, context);
+      await _messageService.ReceiveOCPP20(status);
     else if (protocol == Defaults.Protocol_OCPP16)
-      await Receive16(status, context);
+      await _messageService.ReceiveOCPP16(status);
 
     // Short circuit the middleware
     // Explanation see warning in https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-7.0#create-a-middleware-pipeline-with-webapplication
