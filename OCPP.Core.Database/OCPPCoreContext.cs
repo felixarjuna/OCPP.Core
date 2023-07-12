@@ -38,7 +38,7 @@ public partial class OCPPCoreContext : DbContext
   {
   }
 
-  public virtual DbSet<ChargePoint> ChargePoints { get; set; }
+  public virtual DbSet<ChargeStation> ChargeStations { get; set; }
   public virtual DbSet<ChargeTag> ChargeTags { get; set; }
   public virtual DbSet<ConnectorStatus> ConnectorStatuses { get; set; }
   public virtual DbSet<ConnectorStatusView> ConnectorStatusViews { get; set; }
@@ -64,14 +64,12 @@ public partial class OCPPCoreContext : DbContext
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
-    modelBuilder.Entity<ChargePoint>(entity =>
+    modelBuilder.Entity<ChargeStation>(entity =>
     {
-      entity.ToTable("ChargePoint");
-
-      entity.HasIndex(e => e.ChargePointId, "ChargePoint_Identifier")
+      entity.HasIndex(e => e.ChargeStationId, "ChargePoint_Identifier")
                 .IsUnique();
 
-      entity.Property(e => e.ChargePointId).HasMaxLength(100);
+      entity.Property(e => e.ChargeStationId).HasMaxLength(100);
 
       entity.Property(e => e.Comment).HasMaxLength(200);
 
