@@ -19,10 +19,10 @@
         <tbody>
             @if (Model.ChargePoints != null)
             {
-                foreach (ChargePoint cp in Model.ChargePoints)
+                foreach (ChargeStation cp in Model.ChargePoints)
                 {
-                    <tr class="table-row" data-href='@Url.Action("ChargePoint", Constants.HomeController, new { id = cp.ChargePointId })'>
-                        <td>@cp.ChargePointId</td>
+                    <tr class="table-row" data-href='@Url.Action("ChargePoint", Constants.HomeController, new { id = cp.ChargeStationId })'>
+                        <td>@cp.ChargeStationId</td>
                         <td>@cp.Name</td>
                         <td>@cp.Comment</td>
                     </tr>
