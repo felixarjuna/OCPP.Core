@@ -73,12 +73,14 @@ public class OCPPMiddleware
 
     status.WebSocket = webSocket;
 
-    // if (protocol == Defaults.Protocol_OCPP20) 
-    //   await Receive20(status, context);
-    // else if (protocol == Defaults.Protocol_OCPP16)
-    //   await Receive16(status, context)
+    if (protocol == Defaults.Protocol_OCPP20)
+      await Receive20(status, context);
+    else if (protocol == Defaults.Protocol_OCPP16)
+      await Receive16(status, context);
 
-    await _next(context);
+    // Short circuit the middleware
+    // Explanation see warning in https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-7.0#create-a-middleware-pipeline-with-webapplication
+    // await _next(context);
   }
 
   private static ChargePointStatus? OnMessageAuthentication(HttpContext context, ChargeStation station)

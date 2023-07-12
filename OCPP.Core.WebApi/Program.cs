@@ -32,6 +32,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+// Accept WebSocket
+app.UseWebSockets();
+// Integrate custom OCPP Middleware
 app.UseOCPP();
 app.UseCors(allowAllOrigins);
 app.UseAuthorization();
