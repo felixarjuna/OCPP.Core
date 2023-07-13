@@ -6,6 +6,7 @@ using OCPP.Core.WebApi.Common;
 using OCPP.Core.WebApi.Common.Extensions;
 using OCPP.Core.WebApi.Services.Log;
 using OCPP.Core.WebApi.Services.OCPP;
+using OCPP.Protocol.OCPP20;
 
 namespace OCPP.Core.WebApi.Services.Messages;
 
@@ -84,10 +85,10 @@ public class MessageService : IMessageService
           {
             // Handle request from charge station
             case "2":
-              OCPPMessage msgOut = _ocppService.ProcessRequest(messageIn);
+              OCPPMessage messageOut = _ocppService.ProcessRequest(messageIn);
 
               // Send OCPP message with optional logging/dump
-              await SendMessageOCPP20(msgOut, status.WebSocket);
+              await SendMessageOCPP20(messageOut, status.WebSocket);
               break;
             // Handle response from charge station
             case "3":
@@ -119,9 +120,40 @@ public class MessageService : IMessageService
     throw new NotImplementedException();
   }
 
-  public Task SendMessageOCPP20(OCPPMessage message, WebSocket webSocket)
+  public async Task SendMessageOCPP20(OCPPMessage message, WebSocket webSocket)
   {
-    throw new NotImplementedException();
+    string ocppTextMessage;
+    if (string.IsNullOrEmpty(message.ErrorCode))
+    {
+      if (message.MessageType == "2")
+      {
+        // OCPP-Request
+        ocppTextMessage = string.Format("[{0},\"{1}\",\"{2}\",{3}]", message.MessageType, message.UniqueId, message.Action, message.JsonPayload);
+      }
+      else
+      {
+        // OCPP-Response
+        ocppTextMessage = string.Format("[{0},\"{1}\",{2}]", message.MessageType, message.UniqueId, message.JsonPayload);
+      }
+    }
+    else
+    {
+      ocppTextMessage = string.Format("[{0},\"{1}\",\"{2}\",\"{3}\",{4}]", message.MessageType, message.UniqueId, message.ErrorCode, message.ErrorDescription, "{}");
+    }
+    Console.WriteLine("OCPPMiddleware.OCPP20 => SendOcppMessage: {0}", ocppTextMessage);
+
+    if (string.IsNullOrEmpty(ocppTextMessage))
+    {
+      // invalid message
+      ocppTextMessage = string.Format("[{0},\"{1}\",\"{2}\",\"{3}\",{4}]", "4", string.Empty, ErrorCodes.ProtocolError, string.Empty, "{}");
+    }
+
+    byte[] binaryMessage = Encoding.UTF8.GetBytes(ocppTextMessage);
+    await webSocket.SendAsync(
+      new ArraySegment<byte>(binaryMessage, 0, binaryMessage.Length),
+      WebSocketMessageType.Text,
+      true,
+      CancellationToken.None);
   }
 
   public Task UnlockConnectorOCPP20(ChargePointStatus status)
