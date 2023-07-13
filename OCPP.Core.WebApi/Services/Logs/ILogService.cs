@@ -2,7 +2,7 @@ namespace OCPP.Core.WebApi.Services.Log;
 
 public interface ILogService
 {
-  public bool WriteMessageLog(
+  public void WriteMessageLog(
     string chargePointId,
     int? connectorId,
     string message,
