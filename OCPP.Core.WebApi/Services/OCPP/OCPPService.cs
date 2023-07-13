@@ -108,11 +108,6 @@ public partial class OCPPService : OCPPBaseService, IOCPPService
     throw new NotImplementedException();
   }
 
-  public string HandleBootNotification(OCPPMessage messageIn, OCPPMessage messageOut)
-  {
-    throw new NotImplementedException();
-  }
-
   public string HandleClearedChargingLimit(OCPPMessage messageIn, OCPPMessage messageOut)
   {
     throw new NotImplementedException();
