@@ -123,11 +123,6 @@ public partial class OCPPService : OCPPBaseService, IOCPPService
     throw new NotImplementedException();
   }
 
-  public string HandleHeartBeat(OCPPMessage messageIn, OCPPMessage messageOut)
-  {
-    throw new NotImplementedException();
-  }
-
   public string HandleLogStatusNotification(OCPPMessage messageIn, OCPPMessage messageOut)
   {
     throw new NotImplementedException();
@@ -153,11 +148,6 @@ public partial class OCPPService : OCPPBaseService, IOCPPService
     throw new NotImplementedException();
   }
 
-  public string HandleStatusNotification(OCPPMessage messageIn, OCPPMessage messageOut)
-  {
-    throw new NotImplementedException();
-  }
-
   public string HandleTransactionEvent(OCPPMessage messageIn, OCPPMessage messageOut)
   {
     throw new NotImplementedException();
@@ -167,6 +157,4 @@ public partial class OCPPService : OCPPBaseService, IOCPPService
   {
     throw new NotImplementedException();
   }
-
-
 }

@@ -6,6 +6,6 @@ public interface ILogService
     string chargePointId,
     int? connectorId,
     string message,
-    string result,
+    string? result,
     string errorCode);
 }

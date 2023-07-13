@@ -16,7 +16,7 @@ public class LogService : ILogService
     string chargePointId,
     int? connectorId,
     string message,
-    string result,
+    string? result,
     string errorCode)
   {
     MessageLog messageLog = MessageLog.Create(DateTime.UtcNow, chargePointId, connectorId, message, result, errorCode);
