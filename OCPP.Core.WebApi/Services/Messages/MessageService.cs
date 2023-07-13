@@ -58,6 +58,7 @@ public class MessageService : IMessageService
       if (result is null || result.MessageType == WebSocketMessageType.Close)
       {
         Console.WriteLine("OCPPMiddleware.Receive20 => Receive: unexpected result: CloseStatus={0} / MessageType={1}", result?.CloseStatus, result?.MessageType);
+        await status.WebSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
       }
       else
       {
