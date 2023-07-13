@@ -2,6 +2,8 @@ using System.Reflection;
 using Mapster;
 using MapsterMapper;
 using OCPP.Core.WebApi.Services.ChargeStations;
+using OCPP.Core.WebApi.Services.Log;
+using OCPP.Core.WebApi.Services.Messages;
 
 namespace OCPP.Core.WebApi;
 
@@ -12,6 +14,8 @@ public static class DependencyInjection
   {
     services.AddMappings();
     services.AddScoped<IChargeStationService, ChargeStationService>();
+    services.AddScoped<IMessageService, MessageService>();
+    services.AddScoped<ILogService, LogService>();
 
     return services;
   }

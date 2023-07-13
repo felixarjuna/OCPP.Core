@@ -7,7 +7,9 @@ namespace OCPP.Core.WebApi.Services.OCPP;
 public partial class OCPPService : OCPPBaseService, IOCPPService
 {
   private readonly ILogService _logService;
-  public OCPPService(ILogService logService)
+  public const string VendorId = "Ploeg GmbH";
+
+  public OCPPService(ILogService logService, ChargePointStatus chargePointStatus) : base(chargePointStatus)
   {
     _logService = logService;
   }

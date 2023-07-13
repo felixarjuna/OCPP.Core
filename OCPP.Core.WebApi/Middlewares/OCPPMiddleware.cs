@@ -24,21 +24,12 @@ public class OCPPMiddleware
     Console.WriteLine("OCPPMiddleware => Websocket request: Path='{0}'", context.Request.Path);
 
     // Retrieve charge station Id from request and check if Id exists
-    if (!context.Request.Path.HasValue) return;
-    string[] parts = context.Request.Path.Value.Split('/');
-    string chargeStationId = string.IsNullOrWhiteSpace(parts[^1]) ? parts[^2] : parts[^1];
-
-    Console.WriteLine("OCPPMiddleware => Connection request with chargepoint identifier = '{0}'", chargeStationId);
-
-    ErrorOr<ChargeStation> result = _chargeStationService.GetChargeStationById(chargeStationId);
-    if (result.IsError)
+    ChargeStation? station = OnVerifyAvailableChargeStation(context, _chargeStationService);
+    if (station is null)
     {
-      Console.WriteLine("OCPPMiddleware => FAILURE: Found no chargepoint with identifier={0}", chargeStationId);
+      context.Response.StatusCode = (int)HttpStatusCode.PreconditionFailed;
       return;
     }
-
-    ChargeStation station = result.Value;
-    Console.WriteLine("OCPPMiddleware => SUCCESS: Found chargepoint with identifier={0}", station.ChargeStationId);
 
     // Message Authentication
     ChargePointStatus? status = OnMessageAuthentication(context, station);
@@ -82,6 +73,29 @@ public class OCPPMiddleware
     // Short circuit the middleware
     // Explanation see warning in https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-7.0#create-a-middleware-pipeline-with-webapplication
     // await _next(context);
+  }
+
+  private static ChargeStation? OnVerifyAvailableChargeStation(
+    HttpContext context,
+    IChargeStationService _chargeStationService)
+  {
+    // Retrieve charge station Id from request and check if Id exists
+    if (!context.Request.Path.HasValue) return default;
+    string[] parts = context.Request.Path.Value.Split('/');
+    string chargeStationId = string.IsNullOrWhiteSpace(parts[^1]) ? parts[^2] : parts[^1];
+
+    Console.WriteLine("OCPPMiddleware => Connection request with chargepoint identifier = '{0}'", chargeStationId);
+
+    ErrorOr<ChargeStation> result = _chargeStationService.GetChargeStationById(chargeStationId);
+    if (result.IsError)
+    {
+      Console.WriteLine("OCPPMiddleware => FAILURE: Found no chargepoint with identifier={0}", chargeStationId);
+      return default;
+    }
+
+    ChargeStation station = result.Value;
+    Console.WriteLine("OCPPMiddleware => SUCCESS: Found chargepoint with identifier={0}", station.ChargeStationId);
+    return station;
   }
 
   private static ChargePointStatus? OnMessageAuthentication(HttpContext context, ChargeStation station)
