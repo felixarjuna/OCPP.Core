@@ -4,13 +4,16 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
-import { Inter } from "next/font/google";
+import { Inter, Silkscreen } from "next/font/google";
+import localFont from "next/font/local";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { Sidebar } from "./components/sidebar";
 import "./globals.css";
 
+const silkscreen = Silkscreen({ subsets: ["latin"], variable: "--font-silkscreen", weight: "400" });
 const inter = Inter({ subsets: ["latin"] });
+const grotesk = localFont({ src: "../../public/fonts/Grotesk.otf", variable: "--font-grotesk" });
 
 export const metadata = {
   title: "ChargeNow",
@@ -24,11 +27,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <QueryClientProvider client={queryClient}>
-      <html lang="en">
-        <body className={inter.className} suppressHydrationWarning>
-          <main className="min-h-screen">
-            <div className="p-10">
-              <div className="min-h-[calc(100vh-80px)] border rounded-xl grid lg:grid-cols-5 p-8">
+      <html lang="en" className="cursor-none">
+        <body className={`${inter.className} ${silkscreen.variable}`} suppressHydrationWarning>
+          <main className="m-10">
+            <div className="min-h-[calc(100vh-80px)] border-2 rounded-xl">
+              <div className="grid lg:grid-cols-5 m-8">
                 <Sidebar />
                 <div className={cn(pathname === "/" ? "col-span-5" : "col-span-4")}>{children}</div>
               </div>
