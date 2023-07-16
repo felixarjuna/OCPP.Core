@@ -68,10 +68,18 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        typing: { from: { width: 0 }, to: { width: "100%" } },
+        "blink-caret": {
+          from: { opacity: 0 },
+          to: { opacity: 0 },
+          "50%": { opacity: 1 },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        typing: "typing 3.5s steps(16, end)",
+        "blink-caret": "blink-caret .75s step-end infinite",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

@@ -6,17 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/utils/motion";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  ChevronDown,
-  Clock,
-  CreditCard,
-  Home,
-  Leaf,
-  MapPin,
-  TrendingUp,
-  Users,
-  Zap,
-} from "lucide-react";
+import { ChevronDown, Clock, CreditCard, Home, MapPin, TrendingUp, Users, Zap } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
@@ -32,9 +22,11 @@ export const Sidebar = ({ className }: SidebarProps) => {
     <div className={cn("pb-12", className, pathName === "/" && "hidden")}>
       <div className="space-y-4 py-4">
         <div className="flex px-4 justify-between items-center">
-          <div className="flex space-x-2 items-center">
-            <Leaf />
-            <h2 className="text-lg font-semibold tracking-tight">Ploeg</h2>
+          <div
+            className="flex space-x-2 items-center cursor-pointer"
+            onClick={() => router.push("/")}
+          >
+            <h2 className="text-3xl font-semibold tracking-tight font-silkscreen">Ploeg</h2>
           </div>
           {/* <Button variant={"ghost"} size="icon">
             <ArrowLeftToLine className="w-5 h-5" />
