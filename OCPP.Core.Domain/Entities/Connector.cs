@@ -7,7 +7,6 @@ public class Connector
   public int ConnectorId { get; set; }
   public string ConnectorName { get; set; } = null!;
 
-  public int? TransactionId { get; set; }
   public ConnectorStatusEnum Status { get; set; }
 
   public double? ChargeRateKW { get; set; }
@@ -22,4 +21,6 @@ public class Connector
   // Navigation
   public int StationId { get; set; }
   public ChargeStation Station { get; set; } = null!;
+
+  public virtual ICollection<Transaction>? Transactions { get; set; }
 }

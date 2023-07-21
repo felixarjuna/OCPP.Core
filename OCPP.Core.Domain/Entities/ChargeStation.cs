@@ -1,6 +1,4 @@
-﻿using System.Net.Cache;
-using System.Net;
-using OCPP.Core.Contracts.ChargeStation;
+﻿using OCPP.Core.Contracts.ChargeStation;
 using OCPP.Core.Domain.Common.Enums;
 
 namespace OCPP.Core.Domain.Entities;
@@ -23,10 +21,10 @@ public class ChargeStation
   public string City { get; set; } = null!;
   public string Street { get; set; } = null!;
 
-  public bool Online { get; set; } = false;
+  public bool Online { get; set; }
   public string? Protocol { get; set; }
 
-  public virtual ICollection<Connector>? Connectors { get; set; }
+  public virtual List<Connector>? Connectors { get; set; }
 
   private ChargeStation() { }
 
@@ -40,7 +38,7 @@ public class ChargeStation
     string clientCertThumb)
   {
     StationId = stationId;
-    StationId = stationName;
+    StationName = stationName;
     City = city;
     Street = street;
     Username = username;

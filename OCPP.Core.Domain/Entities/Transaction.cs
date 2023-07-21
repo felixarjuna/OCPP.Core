@@ -14,6 +14,7 @@ public class Transaction
   public double? MeterStop { get; set; }
   public string StopReason { get; set; } = null!;
 
+  // Navigation
   public int ConnectorId { get; set; }
   public virtual Connector Connector { get; set; } = null!;
 }
