@@ -1,17 +1,23 @@
 import axios from "axios";
-import { ChargeStation } from "./contracts";
+import { ChargeStationForm } from "./contracts";
+
+const apiClient = axios.create({
+  baseURL: "http://localhost:5207",
+});
+
 // ----------------------------- Charge Point -----------------------------------
 export const getChargeStations = async () => {
-  const response = await axios.get<ChargeStation[]>("http://localhost:5207/api/chargestations");
+  const response = await apiClient.get<ChargeStationForm[]>("/api/chargestations");
+  console.log(response.data);
   return response.data;
 };
 
-export const createChargeStation = async (request: ChargeStation) => {
-  const response = await axios.post("http://localhost:5207/api/chargestations", request);
+export const createChargeStation = async (request: ChargeStationForm) => {
+  const response = await apiClient.post("/api/chargestations", request);
   return response.data;
 };
 
 export const deleteChargeStation = async (stationId: string) => {
-  const response = await axios.delete(`http://localhost:5207/api/chargestations/${stationId}`);
+  const response = await apiClient.delete(`/api/chargestations/${stationId}`);
   return response.data;
 };
