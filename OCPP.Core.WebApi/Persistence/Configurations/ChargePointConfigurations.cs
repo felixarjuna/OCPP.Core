@@ -8,8 +8,10 @@ public class ChargePointConfigurations : IEntityTypeConfiguration<ChargeStation>
 {
   public void Configure(EntityTypeBuilder<ChargeStation> builder)
   {
+    builder.HasKey(e => e.StationId);
+
     builder.HasIndex(e => e.StationId, "ChargeStation_Identifier")
-              .IsUnique();
+           .IsUnique();
 
     builder.Property(e => e.StationId).HasMaxLength(100);
     builder.Property(e => e.StationName).HasMaxLength(100);
