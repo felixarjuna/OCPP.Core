@@ -9,18 +9,14 @@ public partial class OCPPService : OCPPBaseService, IOCPPService
   private readonly ILogService _logService;
   public const string VendorId = "Ploeg GmbH";
 
-  public OCPPService(ILogService logService, ChargePointStatus chargePointStatus) : base(chargePointStatus)
+  public OCPPService(ILogService logService, ChargeStationStatus chargePointStatus) : base(chargePointStatus)
   {
     _logService = logService;
   }
 
   public OCPPMessage ProcessRequest(OCPPMessage messageIn)
   {
-    OCPPMessage msgOut = new()
-    {
-      MessageType = "3",
-      UniqueId = messageIn.UniqueId
-    };
+    OCPPMessage msgOut = OCPPMessage.CreateResponse(messageIn.UniqueId);
 
     string errorCode;
     if (messageIn.MessageType == "2")

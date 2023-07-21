@@ -4,9 +4,9 @@ namespace OCPP.Core.WebApi.Services.OCPP;
 
 public class OCPPBaseService
 {
-  protected ChargePointStatus ChargePointStatus { get; set; } = null!;
+  protected ChargeStationStatus ChargePointStatus { get; set; } = null!;
 
-  public OCPPBaseService(ChargePointStatus chargePointStatus)
+  public OCPPBaseService(ChargeStationStatus chargePointStatus)
   {
     ChargePointStatus = chargePointStatus;
   }

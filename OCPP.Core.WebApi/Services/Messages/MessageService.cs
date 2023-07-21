@@ -22,17 +22,17 @@ public class MessageService : IMessageService
   // Dictionary for processing asynchronous API calls
   private readonly Dictionary<string, OCPPMessage> _requestQueue = new();
 
-  public Task ReceiveOCPP16(ChargePointStatus status)
+  public Task ReceiveOCPP16(ChargeStationStatus status)
   {
     throw new NotImplementedException();
   }
 
-  public Task ResetOCPP16(ChargePointStatus status)
+  public Task ResetOCPP16(ChargeStationStatus status)
   {
     throw new NotImplementedException();
   }
 
-  public Task UnlockConnectorOCPP16(ChargePointStatus status)
+  public Task UnlockConnectorOCPP16(ChargeStationStatus status)
   {
     throw new NotImplementedException();
   }
@@ -45,14 +45,14 @@ public class MessageService : IMessageService
   /// <summary>
   /// Waits for new OCPP V2.0 messages on the open websocket connection and delegates processing to a controller
   /// </summary>
-  public async Task ReceiveOCPP20(ChargePointStatus status)
+  public async Task ReceiveOCPP20(ChargeStationStatus status)
   {
     byte[] buffer = new byte[1024 * 4];
     MemoryStream memStream = new(buffer.Length);
 
     OCPPService _ocppService = new(_logService, status);
 
-    while (status.WebSocket.State == WebSocketState.Open)
+    while (status.WebSocket?.State == WebSocketState.Open)
     {
       WebSocketReceiveResult result = await status.WebSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
       if (result is null || result.MessageType == WebSocketMessageType.Close)
@@ -81,7 +81,7 @@ public class MessageService : IMessageService
 
           Console.WriteLine("OCPPMiddleware.Receive20 => OCPP-Message: Type={0} / ID={1} / Action={2})", messageTypeId, uniqueId, action);
 
-          OCPPMessage messageIn = new(messageTypeId, uniqueId, action, jsonPayload);
+          OCPPMessage messageIn = OCPPMessage.Create(messageTypeId, uniqueId, action, jsonPayload);
           switch (messageIn.MessageType)
           {
             // Handle request from charge station
@@ -113,10 +113,10 @@ public class MessageService : IMessageService
       }
     }
 
-    Console.WriteLine("OCPPMiddleware.Receive20 => Websocket closed: State={0} / CloseStatus={1}", status.WebSocket.State, status.WebSocket.CloseStatus);
+    Console.WriteLine("OCPPMiddleware.Receive20 => Websocket closed: State={0} / CloseStatus={1}", status.WebSocket?.State, status.WebSocket?.CloseStatus);
   }
 
-  public Task ResetOCPP20(ChargePointStatus status)
+  public Task ResetOCPP20(ChargeStationStatus status)
   {
     throw new NotImplementedException();
   }
@@ -157,7 +157,7 @@ public class MessageService : IMessageService
       CancellationToken.None);
   }
 
-  public Task UnlockConnectorOCPP20(ChargePointStatus status)
+  public Task UnlockConnectorOCPP20(ChargeStationStatus status)
   {
     throw new NotImplementedException();
   }

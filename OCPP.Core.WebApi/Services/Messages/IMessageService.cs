@@ -5,13 +5,13 @@ namespace OCPP.Core.WebApi.Services.Messages;
 
 public interface IMessageService
 {
-  Task ReceiveOCPP20(ChargePointStatus status);
-  Task ResetOCPP20(ChargePointStatus status);
-  Task UnlockConnectorOCPP20(ChargePointStatus status);
+  Task ReceiveOCPP20(ChargeStationStatus status);
+  Task ResetOCPP20(ChargeStationStatus status);
+  Task UnlockConnectorOCPP20(ChargeStationStatus status);
   Task SendMessageOCPP20(OCPPMessage message, WebSocket webSocket);
 
-  Task ReceiveOCPP16(ChargePointStatus status);
-  Task ResetOCPP16(ChargePointStatus status);
-  Task UnlockConnectorOCPP16(ChargePointStatus status);
+  Task ReceiveOCPP16(ChargeStationStatus status);
+  Task ResetOCPP16(ChargeStationStatus status);
+  Task UnlockConnectorOCPP16(ChargeStationStatus status);
   Task SendMessageOCPP16(OCPPMessage message, WebSocket webSocket);
 }

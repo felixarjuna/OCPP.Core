@@ -21,16 +21,17 @@ export const CreateStationForm = () => {
   const form = useForm<ChargeStation>({
     resolver: zodResolver(chargeStationSchema),
     defaultValues: {
-      chargeStationId: "",
-      name: "",
-      comment: "",
+      stationId: "",
+      stationName: "",
+      city: "",
+      street: "",
       username: "",
       password: "",
       clientCertThumb: "",
     },
   });
 
-  const { onCreateChargeStation } = useChargePointEvents(form.getValues().chargeStationId);
+  const { onCreateChargeStation } = useChargePointEvents(form.getValues().stationId);
   // Define submit handler
   const onSubmit = (values: ChargeStation) => {
     onCreateChargeStation.mutate(values);
@@ -42,7 +43,7 @@ export const CreateStationForm = () => {
         <div className="grid grid-cols-2 gap-x-5 gap-y-3">
           <FormField
             control={form.control}
-            name="chargeStationId"
+            name="stationId"
             render={({ field }) => (
               <FormItem className="col-span-1">
                 <FormLabel>Station Id</FormLabel>
@@ -56,10 +57,36 @@ export const CreateStationForm = () => {
           />
           <FormField
             control={form.control}
-            name="name"
+            name="stationName"
             render={({ field }) => (
               <FormItem className="col-span-1">
                 <FormLabel>Station Name</FormLabel>
+                <FormControl>
+                  <Input {...field} className="text-black text-sm" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem className="col-span-1">
+                <FormLabel>City</FormLabel>
+                <FormControl>
+                  <Input {...field} className="text-black text-sm" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="street"
+            render={({ field }) => (
+              <FormItem className="col-span-1">
+                <FormLabel>Street</FormLabel>
                 <FormControl>
                   <Input {...field} className="text-black text-sm" />
                 </FormControl>
@@ -101,19 +128,6 @@ export const CreateStationForm = () => {
             render={({ field }) => (
               <FormItem className="col-span-1">
                 <FormLabel>Client Certificate</FormLabel>
-                <FormControl>
-                  <Input {...field} className="text-black text-sm" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="comment"
-            render={({ field }) => (
-              <FormItem className="col-span-1">
-                <FormLabel>Comment</FormLabel>
                 <FormControl>
                   <Input {...field} className="text-black text-sm" />
                 </FormControl>

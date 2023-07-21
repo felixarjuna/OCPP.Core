@@ -28,7 +28,7 @@ public class ChargeStationsController : ApiController
     return result.Match(
       (res) => CreatedAtAction(
         actionName: "CreateChargeStation",
-        routeValues: new { id = ChargeStation.ChargeStationId },
+        routeValues: new { id = ChargeStation.StationId },
         value: res),
       (err) => Problem(err));
   }
@@ -52,7 +52,7 @@ public class ChargeStationsController : ApiController
   [HttpPut("{id}")]
   public IActionResult UpsertChargeStation(string id, [FromBody] UpsertChargeStationRequest request)
   {
-    if (id != request.ChargeStationId) return BadRequest();
+    if (id != request.StationId) return BadRequest();
 
     var ChargeStation = _mapper.Map<ChargeStation>(request);
 

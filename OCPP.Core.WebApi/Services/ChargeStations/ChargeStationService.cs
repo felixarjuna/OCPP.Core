@@ -17,7 +17,7 @@ public class ChargeStationService : IChargeStationService
 
   public ErrorOr<ChargeStation> AddChargeStation(ChargeStation ChargeStation)
   {
-    if (_context.ChargeStations.Any(x => x.ChargeStationId == ChargeStation.ChargeStationId))
+    if (_context.ChargeStations.Any(x => x.StationId == ChargeStation.StationId))
       return Errors.ChargeStation.AlreadyExists;
 
     _context.ChargeStations.Add(ChargeStation);
@@ -27,7 +27,7 @@ public class ChargeStationService : IChargeStationService
 
   public ErrorOr<ChargeStation> GetChargeStationById(string id)
   {
-    if (_context.ChargeStations.AsNoTracking().FirstOrDefault(x => x.ChargeStationId == id) is not ChargeStation ChargeStation)
+    if (_context.ChargeStations.AsNoTracking().FirstOrDefault(x => x.StationId == id) is not ChargeStation ChargeStation)
       return Errors.ChargeStation.NotFound;
     return ChargeStation;
   }
@@ -39,7 +39,7 @@ public class ChargeStationService : IChargeStationService
 
   public ErrorOr<ChargeStation> UpsertChargeStation(ChargeStation ChargeStation)
   {
-    if (!_context.ChargeStations.Any(x => x.ChargeStationId == ChargeStation.ChargeStationId))
+    if (!_context.ChargeStations.Any(x => x.StationId == ChargeStation.StationId))
       return Errors.ChargeStation.NotFound;
 
     _context.ChargeStations.Update(ChargeStation);
@@ -49,7 +49,7 @@ public class ChargeStationService : IChargeStationService
 
   public ErrorOr<Deleted> DeleteChargeStation(string id)
   {
-    if (_context.ChargeStations.FirstOrDefault(x => x.ChargeStationId == id) is not ChargeStation ChargeStation)
+    if (_context.ChargeStations.FirstOrDefault(x => x.StationId == id) is not ChargeStation ChargeStation)
       return Errors.ChargeStation.NotFound;
 
     _context.ChargeStations.Remove(ChargeStation);

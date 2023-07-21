@@ -5,7 +5,7 @@ namespace OCPP.Core.Domain.Entities;
 /// <summary>
 /// Wrapper object for OCPP Message
 /// </summary>
-public class OCPPMessage
+public sealed class OCPPMessage
 {
   /// <summary>
   /// Message type
@@ -43,19 +43,23 @@ public class OCPPMessage
   [JsonIgnore]
   public TaskCompletionSource<string>? TaskCompletionSource { get; set; }
 
-  /// <summary>
-  /// Empty constructor
-  /// </summary>
   private OCPPMessage() { }
 
-  /// <summary>
-  /// Constructor
-  /// </summary>
-  public OCPPMessage(string messageType, string uniqueId, string action, string jsonPayload)
+  private OCPPMessage(string messageType, string uniqueId, string action, string jsonPayload)
   {
     MessageType = messageType;
     UniqueId = uniqueId;
     Action = action;
     JsonPayload = jsonPayload;
+  }
+
+  public static OCPPMessage Create(string messageType, string uniqueId, string action, string jsonPayload)
+  {
+    return new OCPPMessage(messageType, uniqueId, action, jsonPayload);
+  }
+
+  public static OCPPMessage CreateResponse(string uniqueId)
+  {
+    return new OCPPMessage { UniqueId = uniqueId, MessageType = "3" };
   }
 }

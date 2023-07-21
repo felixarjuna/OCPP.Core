@@ -32,7 +32,7 @@ public class OCPPMiddleware
     }
 
     // Message Authentication
-    ChargePointStatus? status = OnMessageAuthentication(context, station);
+    ChargeStationStatus? status = OnMessageAuthentication(context, station);
     if (status is null)
     {
       context.Response.StatusCode = (int)HttpStatusCode.PreconditionFailed;
@@ -51,7 +51,7 @@ public class OCPPMiddleware
     string? protocol = Defaults.SupportedProtocols.ToList().Find(context.WebSockets.WebSocketRequestedProtocols.Contains);
     if (string.IsNullOrEmpty(protocol))
     {
-      Console.WriteLine("OCPPMiddleware => No supported sub-protocol from charge station '{1}'", station.ChargeStationId);
+      Console.WriteLine("OCPPMiddleware => No supported sub-protocol from charge station '{1}'", station.StationId);
       context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
       return;
     }
@@ -61,7 +61,7 @@ public class OCPPMiddleware
     // Handle socket communication
     Console.WriteLine("OCPPMiddleware => Waiting for message...");
     using WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync(protocol);
-    Console.WriteLine("OCPPMiddleware => WebSocket connection with charge station '{0}'", station.ChargeStationId);
+    Console.WriteLine("OCPPMiddleware => WebSocket connection with charge station '{0}'", station.StationId);
 
     status.WebSocket = webSocket;
 
@@ -94,11 +94,11 @@ public class OCPPMiddleware
     }
 
     ChargeStation station = result.Value;
-    Console.WriteLine("OCPPMiddleware => SUCCESS: Found chargepoint with identifier={0}", station.ChargeStationId);
+    Console.WriteLine("OCPPMiddleware => SUCCESS: Found chargepoint with identifier={0}", station.StationId);
     return station;
   }
 
-  private static ChargePointStatus? OnMessageAuthentication(HttpContext context, ChargeStation station)
+  private static ChargeStationStatus? OnMessageAuthentication(HttpContext context, ChargeStation station)
   {
     if (!string.IsNullOrWhiteSpace(station.Username))
     {
@@ -116,12 +116,12 @@ public class OCPPMiddleware
         || station.Password != credentials[1])
       {
         // Authentication does NOT match => Failure
-        Console.WriteLine("OCPPMiddleware => FAILURE: Basic authentication for chargepoint '{0}' does NOT match", station.ChargeStationId);
+        Console.WriteLine("OCPPMiddleware => FAILURE: Basic authentication for chargepoint '{0}' does NOT match", station.StationId);
         context.Response.Headers.Add("WWW-Authenticate", "Basic realm=\"OCPP.Core\"");
         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
         return default;
       }
-      Console.WriteLine("OCPPMiddleware => SUCCESS: Basic authentication for chargepoint '{0}' match", station.ChargeStationId);
+      Console.WriteLine("OCPPMiddleware => SUCCESS: Basic authentication for chargepoint '{0}' match", station.StationId);
     }
     else if (!string.IsNullOrWhiteSpace(station.ClientCertThumb))
     {
@@ -134,19 +134,19 @@ public class OCPPMiddleware
 
       if (!certificate.Thumbprint.Equals(station.ClientCertThumb, StringComparison.InvariantCultureIgnoreCase))
       {
-        Console.WriteLine("OCPPMiddleware => FAILURE: Certificate authentication for chargepoint '{0}' does NOT match", station.ChargeStationId);
+        Console.WriteLine("OCPPMiddleware => FAILURE: Certificate authentication for chargepoint '{0}' does NOT match", station.StationId);
         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
         return default;
       }
 
       // Authentication match => OK
-      Console.WriteLine("OCPPMiddleware => SUCCESS: Certificate authentication for chargepoint '{0}' match", station.ChargeStationId);
+      Console.WriteLine("OCPPMiddleware => SUCCESS: Certificate authentication for chargepoint '{0}' match", station.StationId);
     }
     else
     {
-      Console.WriteLine("OCPPMiddleware => No authentication for chargepoint '{0}' configured", station.ChargeStationId);
+      Console.WriteLine("OCPPMiddleware => No authentication for chargepoint '{0}' configured", station.StationId);
     }
-    return new ChargePointStatus(station);
+    return new ChargeStationStatus(station);
   }
 }
 

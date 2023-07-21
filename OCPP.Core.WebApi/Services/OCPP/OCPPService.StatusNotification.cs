@@ -59,7 +59,7 @@ public partial class OCPPService
           errorCode = ErrorCodes.InternalError;
         }
 
-        if (ChargePointStatus.OnlineConnectors.ContainsKey(connectorId))
+        if (ChargePointStatus.OnlineConnectors!.ContainsKey(connectorId))
         {
           OnlineConnectorStatus ocs = ChargePointStatus.OnlineConnectors[connectorId];
           ocs.Status = newStatus;
