@@ -53,7 +53,7 @@ const Typewriter = ({ words }: { words: string[] }) => {
   return (
     <motion.h1
       ref={textRef}
-      className="text-5xl font-silkscreen whitespace-nowrap overflow-hidden"
+      className="text-6xl font-silkscreen whitespace-nowrap overflow-hidden"
       variants={headerVariant}
       initial={"initial"}
       animate={"animate"}

@@ -18,14 +18,14 @@ const paragraphVariants = {
 
 export const AnimatedText = () => {
   return (
-    <div className="-mt-16 flex items-center flex-col space-y-5">
+    <div className="-mt-16 flex items-center flex-col space-y-8">
       <Typewriter words={["Welcome to Ploeg!"]} />
       <motion.p
         variants={paragraphVariants}
         initial={"initial"}
         animate={"animate"}
         exit={"exit"}
-        className="font-extralight w-2/3 text-center"
+        className="font-extralight w-2/3 text-center text-lg"
       >
         A place where all charge stations find its home. Empowering the future of mobility with
         clean energy without damaging the environment.

@@ -77,7 +77,7 @@
   }
 
   .blink-caret {
-    @apply animate-blink-caret;
+    @apply animate-blink-caret bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent;
   }
 }
 
