@@ -22,13 +22,13 @@ public class ChargeStationsController : ApiController
   [HttpPost]
   public IActionResult CreateChargeStation([FromBody] CreateChargeStationRequest request)
   {
-    var ChargeStation = _mapper.Map<ChargeStation>(request);
+    var station = _mapper.Map<ChargeStation>(request);
 
-    ErrorOr<ChargeStation> result = _chargeStationService.AddChargeStation(ChargeStation);
+    ErrorOr<ChargeStation> result = _chargeStationService.AddChargeStation(station);
     return result.Match(
       (res) => CreatedAtAction(
         actionName: "CreateChargeStation",
-        routeValues: new { id = ChargeStation.StationId },
+        routeValues: new { id = station.StationId },
         value: res),
       (err) => Problem(err));
   }

@@ -4,16 +4,16 @@ using OCPP.Core.Domain.Entities;
 
 namespace OCPP.Core.WebApi.Common.Mapping;
 
-public class ChargePointMappingConfig : IRegister
+public class ChargeStationMappingConfig : IRegister
 {
   public void Register(TypeAdapterConfig config)
   {
     config
       .NewConfig<CreateChargeStationRequest, ChargeStation>()
-      .MapWith(x => ChargeStation.From(x));
+      .MapWith(request => ChargeStation.From(request));
 
     config
       .NewConfig<UpsertChargeStationRequest, ChargeStation>()
-      .MapWith(x => ChargeStation.From(x));
+      .MapWith(request => ChargeStation.From(request));
   }
 }

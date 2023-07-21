@@ -1,3 +1,6 @@
+using System.Linq;
+using System.ComponentModel.Design;
+using Microsoft.VisualBasic.CompilerServices;
 using ErrorOr;
 using Microsoft.EntityFrameworkCore;
 using OCPP.Core.Domain.Common.Errors;
@@ -8,6 +11,7 @@ namespace OCPP.Core.WebApi.Services.ChargeStations;
 
 public class ChargeStationService : IChargeStationService
 {
+  private readonly double ElectricityPrice = 2475; // in Rp. / kWh
   private readonly OCPPCoreDbContext _context;
 
   public ChargeStationService(OCPPCoreDbContext context)
@@ -32,9 +36,27 @@ public class ChargeStationService : IChargeStationService
     return ChargeStation;
   }
 
-  public List<ChargeStation> GetChargeStations()
+  public List<ChargeStationResult> GetChargeStations()
   {
-    return _context.ChargeStations.ToList();
+    return _context.ChargeStations.Select(station =>
+       new ChargeStationResult(
+         station.StationId,
+         station.StationName,
+         station.SerialNumber,
+         station.Model,
+         station.VendorName,
+         station.Modem,
+         station.Username,
+         station.Password,
+         station.ClientCertThumb,
+         station.City,
+         station.Street,
+         station.Online,
+         station.Protocol,
+         station.Connectors,
+         station.Connectors != null ? station.Connectors.Sum(c => c.MeterKWH) : 0,
+         station.Connectors != null ? station.Connectors.Sum(c => c.MeterKWH) * ElectricityPrice : 0,
+         station.Connectors != null ? station.Connectors.Sum(c => c.Transactions!.Count) : 0)).ToList();
   }
 
   public ErrorOr<ChargeStation> UpsertChargeStation(ChargeStation ChargeStation)
