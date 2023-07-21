@@ -19,33 +19,58 @@ namespace OCPP.Core.WebApi.Migrations
 
             modelBuilder.Entity("OCPP.Core.Domain.Entities.ChargeStation", b =>
                 {
-                    b.Property<string>("ChargeStationId")
+                    b.Property<string>("StationId")
                         .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ClientCertThumb")
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Comment")
-                        .HasMaxLength(200)
+                    b.Property<string>("FirmwareVersion")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(100)
+                    b.Property<string>("Model")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Modem")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Online")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Password")
                         .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Protocol")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SerialNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("StationName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ChargeStationId");
+                    b.Property<string>("VendorName")
+                        .HasColumnType("TEXT");
 
-                    b.HasIndex(new[] { "ChargeStationId" }, "ChargeStation_Identifier")
+                    b.HasKey("StationId");
+
+                    b.HasIndex(new[] { "StationId" }, "ChargeStation_Identifier")
                         .IsUnique();
 
                     b.ToTable("ChargeStations");
@@ -77,49 +102,17 @@ namespace OCPP.Core.WebApi.Migrations
                     b.ToTable("ChargeTags");
                 });
 
-            modelBuilder.Entity("OCPP.Core.Domain.Entities.ConnectorStatus", b =>
+            modelBuilder.Entity("OCPP.Core.Domain.Entities.Connector", b =>
                 {
-                    b.Property<string>("ChargePointId")
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("ConnectorId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ConnectorName")
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.Property<double?>("LastMeter")
+                    b.Property<double?>("ChargeRateKW")
                         .HasColumnType("REAL");
 
-                    b.Property<DateTime?>("LastMeterTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastStatus")
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("LastStatusTime")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("ChargePointId", "ConnectorId");
-
-                    b.ToTable("ConnectorStatus", (string)null);
-                });
-
-            modelBuilder.Entity("OCPP.Core.Domain.Entities.ConnectorStatusView", b =>
-                {
-                    b.Property<string>("ChargePointId")
+                    b.Property<string>("ConnectorName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("ConnectorId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ConnectorName")
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<double?>("LastMeter")
@@ -128,47 +121,36 @@ namespace OCPP.Core.WebApi.Migrations
                     b.Property<DateTime?>("LastMeterTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("LastStatus")
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
+                    b.Property<double?>("LastStatus")
+                        .HasColumnType("REAL");
 
                     b.Property<DateTime?>("LastStatusTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<double?>("MeterStart")
+                    b.Property<double?>("MeterKWH")
                         .HasColumnType("REAL");
 
-                    b.Property<double?>("MeterStop")
+                    b.Property<double?>("SoC")
                         .HasColumnType("REAL");
 
-                    b.Property<string>("StartResult")
-                        .HasMaxLength(100)
+                    b.Property<int>("StationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("StationId1")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("StartTagId")
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("StartTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("StopReason")
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("StopTagId")
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("StopTime")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Status")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("TransactionId")
                         .HasColumnType("INTEGER");
 
-                    b.ToTable((string)null);
+                    b.HasKey("ConnectorId");
 
-                    b.ToView("ConnectorStatusView", (string)null);
+                    b.HasIndex("StationId1");
+
+                    b.ToTable("ConnectorStatuses");
                 });
 
             modelBuilder.Entity("OCPP.Core.Domain.Entities.MessageLog", b =>
@@ -186,6 +168,7 @@ namespace OCPP.Core.WebApi.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ErrorCode")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
@@ -213,12 +196,11 @@ namespace OCPP.Core.WebApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ChargePointId")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("ConnectorId")
+                        .HasMaxLength(100)
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ConnectorId1")
                         .HasColumnType("INTEGER");
 
                     b.Property<double>("MeterStart")
@@ -228,10 +210,12 @@ namespace OCPP.Core.WebApi.Migrations
                         .HasColumnType("REAL");
 
                     b.Property<string>("StartResult")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("StartTagId")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
@@ -239,10 +223,12 @@ namespace OCPP.Core.WebApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("StopReason")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("StopTagId")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
@@ -250,30 +236,42 @@ namespace OCPP.Core.WebApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Uid")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.HasKey("TransactionId");
 
-                    b.HasIndex("ChargePointId");
+                    b.HasIndex("ConnectorId1");
 
                     b.ToTable("Transactions");
                 });
 
+            modelBuilder.Entity("OCPP.Core.Domain.Entities.Connector", b =>
+                {
+                    b.HasOne("OCPP.Core.Domain.Entities.ChargeStation", "Station")
+                        .WithMany("Connectors")
+                        .HasForeignKey("StationId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Station");
+                });
+
             modelBuilder.Entity("OCPP.Core.Domain.Entities.Transaction", b =>
                 {
-                    b.HasOne("OCPP.Core.Domain.Entities.ChargeStation", "ChargePoint")
-                        .WithMany("Transactions")
-                        .HasForeignKey("ChargePointId")
-                        .IsRequired()
-                        .HasConstraintName("FK_Transactions_ChargePoint");
+                    b.HasOne("OCPP.Core.Domain.Entities.Connector", "Connector")
+                        .WithMany()
+                        .HasForeignKey("ConnectorId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("ChargePoint");
+                    b.Navigation("Connector");
                 });
 
             modelBuilder.Entity("OCPP.Core.Domain.Entities.ChargeStation", b =>
                 {
-                    b.Navigation("Transactions");
+                    b.Navigation("Connectors");
                 });
 #pragma warning restore 612, 618
         }
