@@ -12,14 +12,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useChargePointEvents } from "@/hooks/useChargePoints";
-import { ChargeStation, chargeStationSchema } from "@/lib/contracts";
+import { ChargeStationForm, addStationSchema } from "@/lib/contracts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 export const CreateStationForm = () => {
   // Define the form
-  const form = useForm<ChargeStation>({
-    resolver: zodResolver(chargeStationSchema),
+  const form = useForm<ChargeStationForm>({
+    resolver: zodResolver(addStationSchema),
     defaultValues: {
       stationId: "",
       stationName: "",
@@ -33,7 +33,7 @@ export const CreateStationForm = () => {
 
   const { onCreateChargeStation } = useChargePointEvents(form.getValues().stationId);
   // Define submit handler
-  const onSubmit = (values: ChargeStation) => {
+  const onSubmit = (values: ChargeStationForm) => {
     onCreateChargeStation.mutate(values);
   };
 
