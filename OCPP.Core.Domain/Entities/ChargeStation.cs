@@ -1,73 +1,26 @@
-﻿#nullable disable
-using OCPP.Core.Contracts.ChargeStation;
+﻿using OCPP.Core.Domain.Common.Enums;
 
 namespace OCPP.Core.Domain.Entities;
 
-public partial class ChargeStation
+public class ChargeStation
 {
-  public ChargeStation() => Transactions = new HashSet<Transaction>();
+  public string StationId { get; set; } = null!;
+  public string StationName { get; set; } = null!;
 
-  public string ChargeStationId { get; set; }
-  public string Name { get; set; }
-  public string Comment { get; set; }
-  public string Username { get; set; }
-  public string Password { get; set; }
-  public string ClientCertThumb { get; set; }
+  public string? SerialNumber { get; set; }
+  public string? Model { get; set; }
+  public string? VendorName { get; set; }
+  public string? FirmwareVersion { get; set; }
+  public ModemTypeEnum Modem { get; set; }
 
-  public virtual ICollection<Transaction> Transactions { get; set; }
+  public string? Username { get; set; }
+  public string? Password { get; set; }
 
-  private ChargeStation(
-    string chargeStationId,
-    string name,
-    string comment,
-    string username,
-    string password,
-    string clientCert)
-  {
-    ChargeStationId = chargeStationId;
-    Name = name;
-    Comment = comment;
-    Username = username;
-    Password = password;
-    ClientCertThumb = clientCert;
-  }
+  public string City { get; set; } = null!;
+  public string Street { get; set; } = null!;
 
-  public static ChargeStation Create(
-    string chargeStationId,
-    string Name,
-    string Comment,
-    string Username,
-    string Password,
-    string ClientCertThumb)
-  {
-    return new ChargeStation(
-      chargeStationId,
-      Name,
-      Comment,
-      Username,
-      Password,
-      ClientCertThumb);
-  }
+  public bool Online { get; set; } = false;
+  public string? Protocol { get; set; }
 
-  public static ChargeStation From(CreateChargeStationRequest request)
-  {
-    return Create(
-      request.ChargeStationId,
-      request.Name,
-      request.Comment,
-      request.Username,
-      request.Password,
-      request.ClientCertThumb);
-  }
-
-  public static ChargeStation From(UpsertChargeStationRequest request)
-  {
-    return Create(
-      request.ChargeStationId,
-      request.Name,
-      request.Comment,
-      request.Username,
-      request.Password,
-      request.ClientCertThumb);
-  }
+  public virtual ICollection<Connector>? Connectors { get; set; }
 }

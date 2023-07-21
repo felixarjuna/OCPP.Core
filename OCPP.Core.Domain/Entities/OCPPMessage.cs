@@ -10,45 +10,43 @@ public class OCPPMessage
   /// <summary>
   /// Message type
   /// </summary>
-  public string MessageType { get; set; }
+  public string MessageType { get; set; } = null!;
 
   /// <summary>
   /// Message ID
   /// </summary>
-  public string UniqueId { get; set; }
+  public string UniqueId { get; set; } = null!;
 
   /// <summary>
   /// Action
   /// </summary>
-  public string Action { get; set; }
+  public string Action { get; set; } = null!;
 
   /// <summary>
   /// JSON-Payload
   /// </summary>
-  public string JsonPayload { get; set; }
+  public string JsonPayload { get; set; } = null!;
 
   /// <summary>
   /// Error-Code
   /// </summary>
-  public string ErrorCode { get; set; }
+  public string? ErrorCode { get; set; }
 
   /// <summary>
   /// Error-Description
   /// </summary>
-  public string ErrorDescription { get; set; }
+  public string? ErrorDescription { get; set; }
 
   /// <summary>
   /// TaskCompletionSource for asynchronous API result
   /// </summary>
   [JsonIgnore]
-  public TaskCompletionSource<string> TaskCompletionSource { get; set; }
+  public TaskCompletionSource<string>? TaskCompletionSource { get; set; }
 
   /// <summary>
   /// Empty constructor
   /// </summary>
-  public OCPPMessage()
-  {
-  }
+  private OCPPMessage() { }
 
   /// <summary>
   /// Constructor
