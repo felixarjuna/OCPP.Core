@@ -9,7 +9,7 @@ import { Mouse } from "./mouse";
 
 export const Homepage = () => {
   const [position, setPosition] = React.useState({
-    x: window?.innerWidth / 2,
+    x: typeof window !== "undefined" ? window?.innerWidth / 2 : 0,
     y: 0,
   });
 

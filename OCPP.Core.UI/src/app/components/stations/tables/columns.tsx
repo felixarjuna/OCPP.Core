@@ -9,6 +9,7 @@ import {
 import { deleteChargeStation } from "@/lib/api";
 import { ChargeStation } from "@/lib/contracts";
 import { type ColumnDef } from "@tanstack/react-table";
+import { isEmpty } from "lodash";
 import { AlertCircle, CheckCircle2, MoreHorizontal, Pen, Trash, Zap } from "lucide-react";
 import Link from "next/link";
 import { DataTableColumnHeader } from "./data-table-column-header";
@@ -67,7 +68,7 @@ export const columns: ColumnDef<ChargeStation>[] = [
     cell: ({ row }) => {
       {
         return row.original.connectors?.map((connector) => {
-          <Zap />;
+          <Zap className="w-4- h-4" />;
         });
       }
     },
@@ -96,14 +97,23 @@ export const columns: ColumnDef<ChargeStation>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Model" className="text-white" />
     ),
-    cell: ({ row }) => (
-      <div>
-        <h1 className="font-bold">
-          {row.original.model} {row.original.serialNumber}
-        </h1>
-        <p className="text-muted/60">{row.original.vendorName}</p>
-      </div>
-    ),
+    cell: ({ row }) => {
+      if (
+        isEmpty(row.original.model) ||
+        isEmpty(row.original.serialNumber) ||
+        isEmpty(row.original.vendorName)
+      )
+        return <h1>Unknown</h1>;
+
+      return (
+        <div>
+          <h1 className="font-bold">
+            {row.original.model} {row.original.serialNumber}
+          </h1>
+          <p className="text-muted/60">{row.original.vendorName}</p>
+        </div>
+      );
+    },
   },
   {
     id: "actions",

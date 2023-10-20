@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-export type ChargeStationForm = z.infer<typeof addStationSchema>;
-
 export const addStationSchema = z.object({
   stationId: z.string().min(2, { message: "Station Id must be at least 2 characters." }),
   stationName: z.string().min(2, { message: "Station name must be at least 2 characters." }),
@@ -11,6 +9,23 @@ export const addStationSchema = z.object({
   password: z.string(),
   clientCertThumb: z.string(),
 });
+
+export type ChargeStationForm = z.infer<typeof addStationSchema>;
+
+const connectorSchema = z.object({
+  connectorId: z.number(),
+  connectorName: z.string(),
+  status: z.string(), // FIXME: Zod Enum Type
+  chargeRateKW: z.number(),
+  meterKWH: z.number(),
+  soc: z.number(),
+  lastStatus: z.number(),
+  lastStatusTime: z.date(),
+  lastMeter: z.number(),
+  lastMeterTime: z.date(),
+});
+
+export type Connector = z.infer<typeof connectorSchema>;
 
 const chargeStationSchema = z.object({
   stationId: z.string(),
@@ -32,7 +47,7 @@ const chargeStationSchema = z.object({
   online: z.boolean(),
   protocol: z.string().nullable(),
 
-  connectors: z.array(z.string()).nullable(),
+  connectors: z.array(connectorSchema),
   energy: z.number(),
   money: z.number(),
   transactions: z.number(),
