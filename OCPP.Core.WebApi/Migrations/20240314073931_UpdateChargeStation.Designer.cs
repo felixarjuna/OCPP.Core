@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OCPP.Core.WebApi.Persistence;
 
@@ -10,9 +11,11 @@ using OCPP.Core.WebApi.Persistence;
 namespace OCPP.Core.WebApi.Migrations
 {
     [DbContext(typeof(OCPPCoreDbContext))]
-    partial class OCPPCoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240314073931_UpdateChargeStation")]
+    partial class UpdateChargeStation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.9");
@@ -23,14 +26,6 @@ namespace OCPP.Core.WebApi.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ChargeBoxSerialNumber")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ChargePointSerialNumber")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -39,19 +34,9 @@ namespace OCPP.Core.WebApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirmwareVersion")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("MeterSerialNumber")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("MeterType")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Model")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Modem")
@@ -65,6 +50,9 @@ namespace OCPP.Core.WebApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Protocol")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SerialNumber")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("StationName")
@@ -81,7 +69,6 @@ namespace OCPP.Core.WebApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("VendorName")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("StationId");

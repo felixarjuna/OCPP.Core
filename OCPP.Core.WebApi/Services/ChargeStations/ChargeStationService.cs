@@ -1,6 +1,3 @@
-using System.Linq;
-using System.ComponentModel.Design;
-using Microsoft.VisualBasic.CompilerServices;
 using ErrorOr;
 using Microsoft.EntityFrameworkCore;
 using OCPP.Core.Domain.Common.Errors;
@@ -42,7 +39,7 @@ public class ChargeStationService : IChargeStationService
        new ChargeStationResult(
          station.StationId,
          station.StationName,
-         station.SerialNumber,
+         station.ChargePointSerialNumber,
          station.Model,
          station.VendorName,
          station.Modem,

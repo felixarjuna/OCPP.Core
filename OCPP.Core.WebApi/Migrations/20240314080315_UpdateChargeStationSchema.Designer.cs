@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OCPP.Core.WebApi.Persistence;
 
@@ -10,9 +11,11 @@ using OCPP.Core.WebApi.Persistence;
 namespace OCPP.Core.WebApi.Migrations
 {
     [DbContext(typeof(OCPPCoreDbContext))]
-    partial class OCPPCoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240314080315_UpdateChargeStationSchema")]
+    partial class UpdateChargeStationSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.9");
