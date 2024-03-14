@@ -50,6 +50,8 @@ public partial class OCPPMiddleware
   {
     _logger.LogTrace("OCPPMiddleware => Websocket request: Path='{0}'", context.Request.Path);
 
+    using OCPPCoreContext dbContext = new(_configuration);
+    ChargeStation chargeStation = null;
     ChargePointStatus chargePointStatus = null;
 
     if (context.Request.Path.StartsWithSegments("/OCPP"))
@@ -71,14 +73,13 @@ public partial class OCPPMiddleware
       // Known chargepoint?
       if (!string.IsNullOrWhiteSpace(chargepointIdentifier))
       {
-        using OCPPCoreContext dbContext = new(_configuration);
-        ChargeStation chargePoint = dbContext.Find<ChargeStation>(chargepointIdentifier);
-        if (chargePoint != null)
+        chargeStation = dbContext.Find<ChargeStation>(chargepointIdentifier);
+        if (chargeStation != null)
         {
-          _logger.LogInformation("OCPPMiddleware => SUCCESS: Found chargepoint with identifier={0}", chargePoint.ChargeStationId);
+          _logger.LogInformation("OCPPMiddleware => SUCCESS: Found chargepoint with identifier={0}", chargeStation.StationId);
 
           // Check optional chargepoint authentication
-          if (!string.IsNullOrWhiteSpace(chargePoint.Username))
+          if (!string.IsNullOrWhiteSpace(chargeStation.Username))
           {
             // Chargepoint MUST send basic authentication header
 
@@ -87,16 +88,16 @@ public partial class OCPPMiddleware
             if (!string.IsNullOrEmpty(authHeader))
             {
               string[] cred = System.Text.ASCIIEncoding.ASCII.GetString(Convert.FromBase64String(authHeader[6..])).Split(':');
-              if (cred.Length == 2 && chargePoint.Username == cred[0] && chargePoint.Password == cred[1])
+              if (cred.Length == 2 && chargeStation.Username == cred[0] && chargeStation.Password == cred[1])
               {
                 // Authentication match => OK
-                _logger.LogInformation("OCPPMiddleware => SUCCESS: Basic authentication for chargepoint '{0}' match", chargePoint.ChargeStationId);
+                _logger.LogInformation("OCPPMiddleware => SUCCESS: Basic authentication for chargepoint '{0}' match", chargeStation.StationId);
                 basicAuthSuccess = true;
               }
               else
               {
                 // Authentication does NOT match => Failure
-                _logger.LogWarning("OCPPMiddleware => FAILURE: Basic authentication for chargepoint '{0}' does NOT match", chargePoint.ChargeStationId);
+                _logger.LogWarning("OCPPMiddleware => FAILURE: Basic authentication for chargepoint '{0}' does NOT match", chargeStation.StationId);
               }
             }
             if (!basicAuthSuccess)
@@ -106,7 +107,7 @@ public partial class OCPPMiddleware
               return;
             }
           }
-          else if (!string.IsNullOrWhiteSpace(chargePoint.ClientCertThumb))
+          else if (!string.IsNullOrWhiteSpace(chargeStation.ClientCertThumb))
           {
             // Chargepoint MUST send basic authentication header
 
@@ -114,16 +115,16 @@ public partial class OCPPMiddleware
             X509Certificate2 clientCert = context.Connection.ClientCertificate;
             if (clientCert != null)
             {
-              if (clientCert.Thumbprint.Equals(chargePoint.ClientCertThumb, StringComparison.InvariantCultureIgnoreCase))
+              if (clientCert.Thumbprint.Equals(chargeStation.ClientCertThumb, StringComparison.InvariantCultureIgnoreCase))
               {
                 // Authentication match => OK
-                _logger.LogInformation("OCPPMiddleware => SUCCESS: Certificate authentication for chargepoint '{0}' match", chargePoint.ChargeStationId);
+                _logger.LogInformation("OCPPMiddleware => SUCCESS: Certificate authentication for chargepoint '{0}' match", chargeStation.StationId);
                 certAuthSuccess = true;
               }
               else
               {
                 // Authentication does NOT match => Failure
-                _logger.LogWarning("OCPPMiddleware => FAILURE: Certificate authentication for chargepoint '{0}' does NOT match", chargePoint.ChargeStationId);
+                _logger.LogWarning("OCPPMiddleware => FAILURE: Certificate authentication for chargepoint '{0}' does NOT match", chargeStation.StationId);
               }
             }
             if (certAuthSuccess == false)
@@ -134,11 +135,11 @@ public partial class OCPPMiddleware
           }
           else
           {
-            _logger.LogInformation("OCPPMiddleware => No authentication for chargepoint '{0}' configured", chargePoint.ChargeStationId);
+            _logger.LogInformation("OCPPMiddleware => No authentication for chargepoint '{0}' configured", chargeStation.StationId);
           }
 
           // Store chargepoint data
-          chargePointStatus = new ChargePointStatus(chargePoint);
+          chargePointStatus = new ChargePointStatus(chargeStation);
         }
         else
         {
@@ -191,11 +192,15 @@ public partial class OCPPMiddleware
                   {
                     // Closed or aborted => remove
                     _chargePointStatusDict.Remove(chargepointIdentifier);
+                    chargeStation.Online = false;
+                    dbContext.SaveChanges();
                   }
                 }
 
                 _chargePointStatusDict.Add(chargepointIdentifier, chargePointStatus);
                 statusSuccess = true;
+                chargeStation.Online = true;
+                dbContext.SaveChanges();
               }
             }
             catch (Exception exp)

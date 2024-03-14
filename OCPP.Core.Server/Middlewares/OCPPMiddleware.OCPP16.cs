@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using OCPP.Core.Database;
 using System;
 using System.IO;
 using System.Net.WebSockets;
@@ -108,6 +109,11 @@ public partial class OCPPMiddleware
     }
     logger.LogInformation("OCPPMiddleware.Receive16 => Websocket closed: State={0} / CloseStatus={1}", chargePointStatus.WebSocket.State, chargePointStatus.WebSocket.CloseStatus);
     _chargePointStatusDict.Remove(chargePointStatus.Id, out ChargePointStatus dummy);
+
+    using OCPPCoreContext dbContext = new(_configuration);
+    ChargeStation chargeStation = dbContext.Find<ChargeStation>(chargePointStatus.Id); ;
+    chargeStation.Online = false;
+    dbContext.SaveChanges();
   }
 
   /// <summary>
