@@ -66,14 +66,13 @@ public partial class OCPPCoreContext : DbContext
   {
     modelBuilder.Entity<ChargeStation>(entity =>
     {
-      entity.HasIndex(e => e.ChargeStationId, "ChargePoint_Identifier")
+      entity.HasKey(e => e.StationId);
+      entity.HasIndex(e => e.StationId, "ChargePoint_Identifier")
                 .IsUnique();
 
-      entity.Property(e => e.ChargeStationId).HasMaxLength(100);
+      entity.Property(e => e.StationId).HasMaxLength(100);
 
-      entity.Property(e => e.Comment).HasMaxLength(200);
-
-      entity.Property(e => e.Name).HasMaxLength(100);
+      entity.Property(e => e.StationName).HasMaxLength(100);
 
       entity.Property(e => e.Username).HasMaxLength(50);
 
