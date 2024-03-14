@@ -8,6 +8,13 @@ export const addStationSchema = z.object({
   username: z.string(),
   password: z.string(),
   clientCertThumb: z.string(),
+  model: z.string(),
+  vendor: z.string(),
+  chargePointSerialNumber: z.string(),
+  chargeBoxSerialNumber: z.string(),
+  firmwareVersion: z.string(),
+  meterSerialNumber: z.string(),
+  meterType: z.string(),
 });
 
 export type ChargeStationForm = z.infer<typeof addStationSchema>;

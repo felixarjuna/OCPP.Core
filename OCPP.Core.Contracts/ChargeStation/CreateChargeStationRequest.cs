@@ -7,5 +7,12 @@ public record CreateChargeStationRequest(
   string Street,
   string Username,
   string Password,
-  string ClientCertThumb
+  string ClientCertThumb,
+  string Model,
+  string Vendor,
+  string ChargePointSerialNumber,
+  string ChargeBoxSerialNumber,
+  string FirmwareVersion,
+  string MeterSerialNumber,
+  string MeterType
 );

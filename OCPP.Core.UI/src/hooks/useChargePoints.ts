@@ -10,7 +10,7 @@ export const useChargePoints = () => {
     queryFn: getChargeStations,
     initialData: [],
   });
-
+  console.log(stations);
   return { stations, isLoading };
 };
 
@@ -26,7 +26,6 @@ export const useChargePointEvents = (stationId: string) => {
       toast({
         title: "Oh yeah! 🚀",
         description: "Charge station successfully created!",
-        variant: "secondary",
       });
     },
   });
